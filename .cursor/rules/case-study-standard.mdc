@@ -1,0 +1,19 @@
+---
+description: OneCare case-study type, spacing, and structure are the standard for every case study
+globs: src/data/case-studies.ts,src/components/case-study/**,src/styles.css
+alwaysApply: false
+---
+
+# Case study standard
+
+OneCare is the visual system for every case study: fonts, type scale, spacing, column width, image radius, captions, header, chapter rail, and More on Display. Do not change OneCare to match another study. Do not add a second type scale.
+
+FNP Circle reuses `CaseStudyPage` and the chapter blocks in `src/data/case-studies.ts`. Alchemic’s story lives in `alchemic-story.tsx`. Giggles’ story lives in `giggles-story.tsx`: same portfolio type, spacing and chrome as OneCare, with its own decision-led sections. Do not fold either story back into OneCare’s chapter pattern.
+
+- Page title: DM Serif Text, 48px / 66px. Summary: Plus Jakarta Sans, 24px, 4px under the title.
+- Chapter titles: DM Serif Text, 32px / 38px. Leads and subsection headings: Plus Jakarta Sans, 22px, italic, weight 600.
+- Body: Plus Jakarta Sans, 20px, line-height 1.55. Card body stays 18px where that size already exists.
+- Spacing tokens on `.case-study-shell`: text 6px, follow 32px, section 64px. Use those; do not invent new gaps.
+- Desktop column: `min(1080px, calc(100% - 280px))`. Mobile (≤767px): `calc(100% - 40px)`.
+- Below the full desktop width (768–1199px), type scales down the same way as the homepage. Do not change the ≥1200px sizes.
+- Mobile (≤767px): title 30px, summary 18px, chapter titles 24px, leads 16px, body 15px. Hide `.case-brief-photo`; keep the brief photo on wider screens.
