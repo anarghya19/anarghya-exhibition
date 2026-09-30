@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { Menu, X } from "lucide-react";
+import { createPortal } from "react-dom";
+import { ArrowLeft, Lock, Menu, X } from "lucide-react";
 import portrait from "../../assets/Anarghya Profile.png";
 import goldenDot from "../../assets/Golden dot.png";
 import bringTable from "../../assets/what I bring to table.png";
@@ -18,6 +19,7 @@ import fnpThumb from "../../assets/FNP Thumbnail.png";
 import inviteCard from "../../assets/Exhibition invite card footer.png";
 import gmailExperiment from "../../assets/Gmail.png";
 import jurassicExperiment from "../../assets/Jurassic escape.png";
+import jurassicVideo from "../../assets/Jurassic Escape - Desktop final.mp4";
 import lumaireExperiment from "../../assets/Lumaire.png";
 import { Button } from "@/components/ui/button";
 
@@ -41,6 +43,7 @@ const projects = [
     href: "/work/alchemic" as const,
     asset: "/assets/work/alchemic.webp",
     image: alchemicThumb,
+    nda: true,
   },
   {
     title: "GIGGLES",
@@ -61,6 +64,7 @@ const projects = [
     href: "/work/fnp-circle" as const,
     asset: "/assets/work/fnp-circle.webp",
     image: fnpThumb,
+    comingSoon: true,
   },
 ];
 
@@ -90,6 +94,7 @@ const experiments = [
     description:
       "A motion-controlled 3D game where players use real body movements to navigate obstacles and survive across Jurassic environments.",
     image: jurassicExperiment,
+    video: jurassicVideo,
   },
   {
     title: "Lumaire",
@@ -138,6 +143,7 @@ function Navbar() {
   const [open, setOpen] = useState(false);
   const close = () => setOpen(false);
   return (
+    <>
     <header className="site-header">
       <div className="site-container nav-layout">
         <a href="#top" className="wordmark" onClick={close}>anarghya</a>
@@ -153,6 +159,8 @@ function Navbar() {
         </Button>
       </div>
     </header>
+    {open ? <button type="button" className="nav-scrim" aria-label="Close menu" onClick={close} /> : null}
+    </>
   );
 }
 
@@ -168,7 +176,7 @@ function Hero() {
           I like asking the <span>“why”</span><br />before I start designing.
         </h1>
         <p className="hero-intro">
-          I’m Anarghya<br />a Product Designer interested in<br />
+          I’m Anarghya<br />an Experience Designer interested in<br />
           <em>understanding human behavior, interaction<br className="desktop-break" /> design, and bringing ideas to life through code.</em>
         </p>
       </div>
@@ -198,20 +206,48 @@ function Plaque({ children, className = "", dots = false }: { children: ReactNod
 }
 
 function ProjectCard({ project, index }: { project: (typeof projects)[number]; index: number }) {
-  return (
-    <Reveal delay={(index % 2) * 70}>
-      <Link to={project.href} className="project-card" aria-label={`View ${project.title} case study`}>
-        <div className="project-frame">
+  const comingSoon = "comingSoon" in project && project.comingSoon;
+  const nda = "nda" in project && project.nda;
+  const [open, setOpen] = useState(false);
+  const card = (
+    <>
+      <div className="project-frame">
+        <div className="project-media">
           {"image" in project && project.image
             ? <img className="project-image" src={project.image} alt="" />
             : <AssetPlaceholder path={project.asset} kind="project" />}
+          {comingSoon ? <p className="coming-soon"><span>Coming soon</span></p> : null}
+          {nda ? (
+            <div className="card-gate">
+              <Lock aria-hidden="true" />
+              <p>Under NDA, contact to know more</p>
+            </div>
+          ) : null}
         </div>
-        <Plaque className="project-plaque" dots>
-          <h3>{project.title}</h3>
-          <p className="plaque-subtitle">{project.subtitle}</p>
-          <p>{project.description}</p>
-        </Plaque>
-      </Link>
+      </div>
+      <Plaque className="project-plaque" dots>
+        <h3>{project.title}</h3>
+        <p className="plaque-subtitle">{project.subtitle}</p>
+        <p>{project.description}</p>
+      </Plaque>
+    </>
+  );
+
+  return (
+    <Reveal delay={(index % 2) * 70}>
+      {comingSoon ? (
+        <div className="project-card is-coming-soon" aria-label={`${project.title}, coming soon`}>
+          {card}
+        </div>
+      ) : nda ? (
+        <button type="button" className={`project-card is-gated${open ? " is-open" : ""}`} aria-expanded={open} aria-label={`${project.title}, under NDA`} onClick={() => setOpen((value) => !value)}>
+          {card}
+        </button>
+      ) : (
+        <Link to={project.href} target="_blank" rel="noreferrer" className="project-card" aria-label={`View ${project.title} case study`}>
+          {card}
+        </Link>
+      )}
     </Reveal>
   );
 }
@@ -279,12 +315,41 @@ function GalleryLights() {
 }
 
 function ExperimentCard({ experiment, index }: { experiment: (typeof experiments)[number]; index: number }) {
+  const video = "video" in experiment ? experiment.video : undefined;
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
   return (
     <Reveal delay={index * 55} className="experiment-reveal">
       <article className="experiment-card">
-        <div className="experiment-frame"><img className="experiment-image" src={experiment.image} alt="" /></div>
+        {video ? (
+          <button type="button" className="experiment-frame" aria-label={`Play ${experiment.title}`} onClick={() => setOpen(true)}>
+            <img className="experiment-image" src={experiment.image} alt="" />
+          </button>
+        ) : (
+          <div className="experiment-frame"><img className="experiment-image" src={experiment.image} alt="" /></div>
+        )}
         <Plaque className="experiment-plaque"><h3>{experiment.title}</h3><p>{experiment.description}</p></Plaque>
       </article>
+      {open && video
+        ? createPortal(
+            <div className="video-pop" role="dialog" aria-modal="true" aria-label={experiment.title}>
+              <div className="video-pop-window">
+                <button type="button" className="video-pop-cancel" aria-label="Cancel" onClick={() => setOpen(false)}><X /></button>
+                <video src={video} controls autoPlay playsInline />
+              </div>
+            </div>,
+            document.body,
+          )
+        : null}
     </Reveal>
   );
 }
@@ -298,6 +363,10 @@ function ExperimentsSection() {
         <div className="experiments-grid">
           {experiments.map((experiment, index) => <ExperimentCard key={experiment.title} experiment={experiment} index={index} />)}
         </div>
+        <p className="experiment-scroll">
+          Scroll Left
+          <ArrowLeft aria-hidden="true" />
+        </p>
       </div>
     </section>
   );
@@ -324,7 +393,7 @@ function ContactSection() {
         <div className="contact-copy">
           <h2 id="contact-heading">Liked the curation?</h2>
           <p>Let’s make something <em>worth exhibiting.</em></p>
-          <small>I’m open to Product Design opportunities, collaborations &amp; conversations.</small>
+          <small>I’m open to Product Design opportunities,<br />collaborations &amp; conversations.</small>
         </div>
         <ContactTicket />
       </div>

@@ -71,7 +71,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Anarghya — Product Designer" },
+      { title: "Anarghya - Experience Designer" },
       { name: "description", content: "A curated exhibition of product design, experiments and art by Anarghya." },
       { name: "author", content: "Anarghya Y S" },
       { property: "og:type", content: "website" },
@@ -84,7 +84,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Serif+Text&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" },
+      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Serif+Text&family=Open+Sans:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" },
+      { rel: "stylesheet", href: "https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" },
       { rel: "icon", href: favicon, type: "image/png" },
     ],
   }),
