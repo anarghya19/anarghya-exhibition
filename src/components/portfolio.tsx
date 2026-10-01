@@ -18,8 +18,8 @@ import gigglesThumb from "../../assets/Giggles Thumbnail.png";
 import fnpThumb from "../../assets/FNP Thumbnail.png";
 import inviteCard from "../../assets/Exhibition invite card footer.png";
 import gmailExperiment from "../../assets/Gmail.png";
-import jurassicExperiment from "../../assets/Jurassic escape.png";
-import jurassicVideo from "../../assets/Jurassic Escape - Desktop final.mp4";
+import jurassicExperiment from "../../assets/Jurassic escape - Desktop final.png";
+import jurassicVideo from "../../assets/The Jurassic Escape desktop (1)-compressed.mp4";
 import lumaireExperiment from "../../assets/Lumaire.png";
 import { Button } from "@/components/ui/button";
 
