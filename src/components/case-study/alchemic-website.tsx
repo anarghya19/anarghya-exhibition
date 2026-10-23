@@ -1,8 +1,8 @@
 import { useId, useState, type KeyboardEvent } from "react";
-import solutionsWireframe from "../../../assets/Alchemic/Solutions Lofi.jpg";
-import solutionsLive from "../../../assets/Alchemic/Packaging testing.jpg";
-import technologyWireframe from "../../../assets/Alchemic/AI insights lofi.jpg";
-import technologyLive from "../../../assets/Alchemic/AI Insights Platform.jpg";
+import solutionsWireframe from "../../../assets/Alchemic/Solutions Lofi.webp";
+import solutionsLive from "../../../assets/Alchemic/Packaging testing.webp";
+import technologyWireframe from "../../../assets/Alchemic/AI insights lofi.webp";
+import technologyLive from "../../../assets/Alchemic/AI Insights Platform.webp";
 import technologyMobile from "../../../assets/Alchemic/mobile view technology page.webp";
 import listenLabs from "../../../assets/Alchemic/Compare - Listen Labs.webp";
 import surveyMonkey from "../../../assets/Alchemic/Compare - Survey Monkey.webp";
@@ -41,13 +41,13 @@ export const alchemicWebsiteAssets: {
       id: "solutions",
       tab: "Solutions ( Packaging Testing )",
       wireframe: {
-        file: "Solutions Lofi.jpg",
+        file: "Solutions Lofi.webp",
         src: solutionsWireframe,
         label: "Paper Wireframe — Image to be added",
         alt: "Paper wireframe for the Solutions ad testing page",
       },
       live: {
-        file: "Packaging testing.jpg",
+        file: "Packaging testing.webp",
         src: solutionsLive,
         label: "Live Website — Screenshot to be added",
         alt: "Live Solutions ad testing page on desktop",
@@ -58,13 +58,13 @@ export const alchemicWebsiteAssets: {
       id: "technology",
       tab: "Technology ( AI Insights )",
       wireframe: {
-        file: "AI insights lofi.jpg",
+        file: "AI insights lofi.webp",
         src: technologyWireframe,
         label: "Paper Wireframe — Image to be added",
         alt: "Paper wireframe for the Technology page",
       },
       live: {
-        file: "AI Insights Platform.jpg",
+        file: "AI Insights Platform.webp",
         src: technologyLive,
         label: "Live Website — Screenshot to be added",
         alt: "Live Technology page on desktop",
@@ -74,7 +74,7 @@ export const alchemicWebsiteAssets: {
   ],
   responsive: {
     desktop: {
-      file: "AI Insights Platform.jpg",
+      file: "AI Insights Platform.webp",
       src: technologyLive,
       label: "Desktop Screenshot — To be added",
       alt: "Desktop layout of the Technology page",

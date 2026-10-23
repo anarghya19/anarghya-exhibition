@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import insightsWireframe from "../../../assets/Alchemic/Dashboard - insights panel.jpg";
+import insightsWireframe from "../../../assets/Alchemic/Dashboard - insights panel.webp";
 import insightsOverview from "../../../assets/Alchemic/Insights 1.webp";
 import evidencePanel from "../../../assets/Alchemic/Insights 2.webp";
 
