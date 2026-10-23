@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
-import workflowWebapp from "../../../assets/Alchemic/workflow-webapp.png";
-import nykaaShot from "../../../assets/Alchemic/nyka.png";
-import instaShot from "../../../assets/Alchemic/insta.png";
-import zeptoShot from "../../../assets/Alchemic/zepto.png";
+import workflowWebapp from "../../../assets/Alchemic/workflow-webapp.webp";
+import nykaaShot from "../../../assets/Alchemic/nyka.webp";
+import instaShot from "../../../assets/Alchemic/insta.webp";
+import zeptoShot from "../../../assets/Alchemic/zepto.webp";
 
 type ClientAsset = {
   key: string;

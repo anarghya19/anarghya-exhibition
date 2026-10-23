@@ -1,11 +1,11 @@
 import { useId, useState, type KeyboardEvent } from "react";
 import solutionsWireframe from "../../../assets/Alchemic/Solutions Lofi.jpg";
-import solutionsLive from "../../../assets/Alchemic/Packaging testing.png";
+import solutionsLive from "../../../assets/Alchemic/Packaging testing.jpg";
 import technologyWireframe from "../../../assets/Alchemic/AI insights lofi.jpg";
-import technologyLive from "../../../assets/Alchemic/AI Insights Platform.png";
-import technologyMobile from "../../../assets/Alchemic/mobile view technology page.png";
-import listenLabs from "../../../assets/Alchemic/Compare - Listen Labs.png";
-import surveyMonkey from "../../../assets/Alchemic/Compare - Survey Monkey.png";
+import technologyLive from "../../../assets/Alchemic/AI Insights Platform.jpg";
+import technologyMobile from "../../../assets/Alchemic/mobile view technology page.webp";
+import listenLabs from "../../../assets/Alchemic/Compare - Listen Labs.webp";
+import surveyMonkey from "../../../assets/Alchemic/Compare - Survey Monkey.webp";
 
 /** Drop each file in assets/Alchemic and set `src` to its imported URL. Leave `url` unset until the live address is confirmed. */
 export type AlchemicShot = {
@@ -47,7 +47,7 @@ export const alchemicWebsiteAssets: {
         alt: "Paper wireframe for the Solutions ad testing page",
       },
       live: {
-        file: "Packaging testing.png",
+        file: "Packaging testing.jpg",
         src: solutionsLive,
         label: "Live Website — Screenshot to be added",
         alt: "Live Solutions ad testing page on desktop",
@@ -64,7 +64,7 @@ export const alchemicWebsiteAssets: {
         alt: "Paper wireframe for the Technology page",
       },
       live: {
-        file: "AI Insights Platform.png",
+        file: "AI Insights Platform.jpg",
         src: technologyLive,
         label: "Live Website — Screenshot to be added",
         alt: "Live Technology page on desktop",
@@ -74,13 +74,13 @@ export const alchemicWebsiteAssets: {
   ],
   responsive: {
     desktop: {
-      file: "AI Insights Platform.png",
+      file: "AI Insights Platform.jpg",
       src: technologyLive,
       label: "Desktop Screenshot — To be added",
       alt: "Desktop layout of the Technology page",
     },
     mobile: {
-      file: "mobile view technology page.png",
+      file: "mobile view technology page.webp",
       src: technologyMobile,
       label: "Mobile Screenshot — To be added",
       alt: "Mobile layout of the Technology page",
@@ -91,7 +91,7 @@ export const alchemicWebsiteAssets: {
       id: "comparison-01",
       title: "Alchemic vs Listen Labs",
       shot: {
-        file: "Compare - Listen Labs.png",
+        file: "Compare - Listen Labs.webp",
         src: listenLabs,
         label: "Comparison page 01 — Screenshot to be added",
         alt: "Listen Labs comparison page",
@@ -101,7 +101,7 @@ export const alchemicWebsiteAssets: {
       id: "comparison-02",
       title: "Alchemic vs Survey Monkey",
       shot: {
-        file: "Compare - Survey Monkey.png",
+        file: "Compare - Survey Monkey.webp",
         src: surveyMonkey,
         label: "Comparison page 02 — Screenshot to be added",
         alt: "SurveyMonkey comparison page",

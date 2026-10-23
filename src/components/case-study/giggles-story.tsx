@@ -1,18 +1,18 @@
-import researchVisual from "../../../assets/Giggles/Research.png";
-import approachesVisual from "../../../assets/Giggles/Existing approaches.png";
-import ideationVisual from "../../../assets/Giggles/Ideation.png";
-import boardVisual from "../../../assets/Giggles/Giggles game board.png";
-import activitiesVisual from "../../../assets/Giggles/3 Activities.png";
-import turnVisual from "../../../assets/Giggles/Turn at a glance.png";
+import researchVisual from "../../../assets/Giggles/Research.webp";
+import approachesVisual from "../../../assets/Giggles/Existing approaches.webp";
+import ideationVisual from "../../../assets/Giggles/Ideation.webp";
+import boardVisual from "../../../assets/Giggles/Giggles game board.webp";
+import activitiesVisual from "../../../assets/Giggles/3 Activities.webp";
+import turnVisual from "../../../assets/Giggles/Turn at a glance.webp";
 import repetitionVisual from "../../../assets/Giggles/Repetition.png";
-import wrongAnswerVisual from "../../../assets/Giggles/Designing for wrong answer.png";
-import sidesVisual from "../../../assets/Giggles/2 sides.png";
+import wrongAnswerVisual from "../../../assets/Giggles/Designing for wrong answer.webp";
+import sidesVisual from "../../../assets/Giggles/2 sides.webp";
 import hardwareVisual from "../../../assets/Giggles/Hardware functioning.png";
-import componentsVisual from "../../../assets/Giggles/Components used.png";
-import finalGif from "../../../assets/Giggles/download.gif";
-import behindVisual from "../../../assets/Giggles/Behind the scenes.png";
-import gameUiVisual from "../../../assets/Giggles/Game UI.png";
-import teacherUiVisual from "../../../assets/Giggles/Teacher app UI.png";
+import componentsVisual from "../../../assets/Giggles/Components used.webp";
+import finalGif from "../../../assets/Giggles/download.webp";
+import behindVisual from "../../../assets/Giggles/Behind the scenes.webp";
+import gameUiVisual from "../../../assets/Giggles/Game UI.webp";
+import teacherUiVisual from "../../../assets/Giggles/Teacher app UI.webp";
 import { GigglesDivider } from "./giggles-divider";
 
 function Frame({ label, tone, image }: { label: string; tone?: string; image?: string }) {

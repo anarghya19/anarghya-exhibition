@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import insightsWireframe from "../../../assets/Alchemic/Dashboard - insights panel.png";
-import insightsOverview from "../../../assets/Alchemic/Insights 1.png";
-import evidencePanel from "../../../assets/Alchemic/Insights 2.png";
+import insightsWireframe from "../../../assets/Alchemic/Dashboard - insights panel.jpg";
+import insightsOverview from "../../../assets/Alchemic/Insights 1.webp";
+import evidencePanel from "../../../assets/Alchemic/Insights 2.webp";
 
 const wireframeAlt = "Conceptual wireframe of three stages: an insights overview, a side panel for evidence, and a full findings view.";
 

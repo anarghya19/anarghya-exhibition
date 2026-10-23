@@ -1,4 +1,4 @@
-import workflowIllustration from "../../../assets/Alchemic/Workflow.png";
+import workflowIllustration from "../../../assets/Alchemic/Workflow.webp";
 import { AlchemicWebsite } from "./alchemic-website";
 import { AlchemicProduct } from "./alchemic-product";
 import { AlchemicClients } from "./alchemic-clients";

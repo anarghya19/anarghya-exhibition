@@ -31,7 +31,7 @@ export function LinedUpWork({ studies }: { studies: CaseStudy[] }) {
         <div className="lined-work-grid">
           {studies.map((study) => (
             study.slug === "fnp-circle" ? <GatedCard key={study.slug} study={study} /> :
-            <Link key={study.slug} to={caseStudyPath[study.slug]} target="_blank" rel="noreferrer" className="lined-card" aria-label={study.title}>
+            <Link key={study.slug} to={caseStudyPath[study.slug]} className="lined-card" aria-label={study.title}>
               <div className="project-frame">
                 <img className="project-image" src={study.cardImage} alt="" />
               </div>
