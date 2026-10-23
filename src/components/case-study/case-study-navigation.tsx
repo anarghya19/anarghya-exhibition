@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { CaseStudySection } from "@/data/case-studies";
 
 const numberFor = (index: number) => String(index + 1).padStart(2, "0");
@@ -17,13 +17,13 @@ export function CaseStudyNavigation({
   const [active, setActive] = useState(0);
   const [visible, setVisible] = useState(false);
   const [open, setOpen] = useState(false);
+  const pinned = useRef(-1);
 
   const linked = sections.filter((section) => section.includeInNav !== false);
 
   useEffect(() => {
     const content = document.getElementById("case-study-content");
     const next = document.getElementById("next-project");
-    const chapters = sections.filter((section) => section.includeInNav !== false).map((section) => document.getElementById(chapterId(slug, section.id)));
     if (!content || !next) return;
 
     const update = () => {
@@ -31,12 +31,13 @@ export function CaseStudyNavigation({
       const nextTop = next.getBoundingClientRect().top;
       setVisible(contentTop < 340 && nextTop > window.innerHeight * 0.62);
 
-      const marker = window.innerHeight * 0.34;
+      const marker = Math.max(320, window.innerHeight * 0.45);
+      const chapters = sections.filter((section) => section.includeInNav !== false).map((section) => document.getElementById(chapterId(slug, section.id)));
       let current = 0;
       chapters.forEach((chapter, index) => {
         if (chapter && chapter.getBoundingClientRect().top <= marker) current = index;
       });
-      setActive(current);
+      setActive(pinned.current >= 0 ? pinned.current : current);
     };
 
     update();
@@ -53,9 +54,20 @@ export function CaseStudyNavigation({
     const section = linked[index];
     if (!section) return;
     const node = document.getElementById(chapterId(slug, section.id));
+    pinned.current = index;
     setActive(index);
     setOpen(false);
-    node?.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (!node) return;
+    const scroller = document.scrollingElement ?? document.documentElement;
+    const top = node.getBoundingClientRect().top + scroller.scrollTop - 132;
+    scroller.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+    const release = () => {
+      if (pinned.current !== index) return;
+      pinned.current = -1;
+      window.dispatchEvent(new Event("scroll"));
+    };
+    scroller.addEventListener("scrollend", release, { once: true });
+    window.setTimeout(release, 1600);
   };
 
   if (!visible) return null;

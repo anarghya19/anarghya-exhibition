@@ -1,4 +1,4 @@
-import onecareCover from "../../assets/One Care/One Care Behance/Cover for website.png";
+import onecareCover from "../../assets/One Care/One Care Behance/Cover for website.webp";
 import problemSolution from "../../assets/One Care/One Care Website/Problem - Solution.png";
 import storyboard from "../../assets/One Care/One Care Website/Storyboard.png";
 import competitorAnalysis from "../../assets/One Care/One Care Website/Competitor Analysis.png";
@@ -22,7 +22,7 @@ import dataFlow from "../../assets/One Care/One Care Website/Data flow.png";
 import onecareThumb from "../../assets/One care Thumbnail.png";
 import alchemicThumb from "../../assets/Alchemic Thumbnail.png";
 import gigglesThumb from "../../assets/Giggles Thumbnail.png";
-import gigglesCover from "../../assets/Giggles/Cover.png";
+import gigglesCover from "../../assets/Giggles/Cover.webp";
 import gigglesBrief from "../../assets/Giggles/Problem Solution.png";
 import fnpThumb from "../../assets/FNP Thumbnail.png";
 
@@ -469,11 +469,36 @@ export const caseStudies: CaseStudy[] = [
     briefStatement: "My role spanned the distance between designing an experience and getting it into production.",
     showBriefHeadings: false,
     sections: [
-      { id: "trust", navTitle: "Building Trust", title: "Building trust" },
-      { id: "clarity", navTitle: "Clarity", title: "Designing for clarity" },
-      { id: "friction", navTitle: "Friction", title: "Removing friction" },
-      { id: "ai", navTitle: "AI Workflow", title: "AI as an implementation layer" },
-      { id: "reflection", navTitle: "Reflection", title: "Reflection" },
+      {
+        id: "approach",
+        navTitle: "Approach",
+        kicker: "Approach",
+        title: "From early sketches to working experiences.",
+      },
+      {
+        id: "website",
+        navTitle: "Website",
+        kicker: "Website",
+        title: "Designing for Understanding",
+      },
+      {
+        id: "product",
+        navTitle: "Product UX",
+        kicker: "Product UX",
+        title: "Making Research Insights Easier to Explore",
+      },
+      {
+        id: "clients",
+        navTitle: "Client Builds",
+        kicker: "Client Builds",
+        title: "Client Builds",
+      },
+      {
+        id: "reflection",
+        navTitle: "Reflection",
+        kicker: "Reflection",
+        title: "Building changed how I make design decisions.",
+      },
     ],
     nextSlug: "giggles",
   },

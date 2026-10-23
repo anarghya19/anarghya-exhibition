@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
-import { ArrowLeft, Lock, Menu, X } from "lucide-react";
+import { ArrowLeft, Menu, X } from "lucide-react";
 import portrait from "../../assets/Anarghya Profile.png";
 import goldenDot from "../../assets/Golden dot.png";
 import bringTable from "../../assets/what I bring to table.png";
@@ -25,14 +25,14 @@ import { Button } from "@/components/ui/button";
 
 const projects = [
   {
-    title: "ONECARE",
-    subtitle: "End-to-end Medical Tourism Platform",
+    title: "GIGGLES",
+    subtitle: "Tangible Interaction Game",
     description:
-      "Designed the service, visual experience and coded platform for an international patient journey from discovery to post-surgery care.",
-    disciplines: "Design Management · Visual Design · Web Development",
-    href: "/work/onecare" as const,
-    asset: "/assets/work/onecare.webp",
-    image: onecareThumb,
+      "Designed and built a physical-digital game for autistic children, combining gameplay, tangible interaction, electronics and code.",
+    disciplines: "Interaction Design · Accessibility · Physical Computing",
+    href: "/work/giggles" as const,
+    asset: "/assets/work/giggles.webp",
+    image: gigglesThumb,
   },
   {
     title: "ALCHEMIC (Summer Internship)",
@@ -43,17 +43,16 @@ const projects = [
     href: "/work/alchemic" as const,
     asset: "/assets/work/alchemic.webp",
     image: alchemicThumb,
-    nda: true,
   },
   {
-    title: "GIGGLES",
-    subtitle: "Tangible Interaction Game",
+    title: "ONECARE",
+    subtitle: "End-to-end Medical Tourism Platform",
     description:
-      "Designed and built a physical-digital game for autistic children, combining gameplay, tangible interaction, electronics and code.",
-    disciplines: "Interaction Design · Accessibility · Physical Computing",
-    href: "/work/giggles" as const,
-    asset: "/assets/work/giggles.webp",
-    image: gigglesThumb,
+      "Designed the service, visual experience and coded platform for an international patient journey from discovery to post-surgery care.",
+    disciplines: "Design Management · Visual Design · Web Development",
+    href: "/work/onecare" as const,
+    asset: "/assets/work/onecare.webp",
+    image: onecareThumb,
   },
   {
     title: "FNP CIRCLE",
@@ -84,12 +83,6 @@ const experience = [
 
 const experiments = [
   {
-    title: "Gmail Pulse",
-    description:
-      "An AI-assisted Gmail concept that surfaces actionable emails and helps users quickly identify what needs their attention.",
-    image: gmailExperiment,
-  },
-  {
     title: "Jurassic Escape",
     description:
       "A motion-controlled 3D game where players use real body movements to navigate obstacles and survive across Jurassic environments.",
@@ -101,6 +94,12 @@ const experiments = [
     description:
       "A stained-glass inspired design system translating light, geometry and layered forms into a distinctive digital visual language.",
     image: lumaireExperiment,
+  },
+  {
+    title: "Gmail Pulse",
+    description:
+      "An AI-assisted Gmail concept that surfaces actionable emails and helps users quickly identify what needs their attention.",
+    image: gmailExperiment,
   },
 ];
 
@@ -149,7 +148,7 @@ function Navbar() {
         <a href="#top" className="wordmark" onClick={close}>anarghya</a>
         <nav className={`desktop-nav ${open ? "mobile-open" : ""}`} aria-label="Primary navigation">
           <a href="#work" onClick={close}>Work</a>
-          <a href="#experiments" onClick={close}>Playground</a>
+          <a href="#experiments" onClick={close}>Experiments</a>
           <a href="#about" onClick={close}>About</a>
           <a href="https://drive.google.com/file/d/1rty1WM8ae-9wCtcvp9i9Any3fwtxRpph/view?usp=sharing" target="_blank" rel="noreferrer" onClick={close}>Resume</a>
         </nav>
@@ -207,8 +206,6 @@ function Plaque({ children, className = "", dots = false }: { children: ReactNod
 
 function ProjectCard({ project, index }: { project: (typeof projects)[number]; index: number }) {
   const comingSoon = "comingSoon" in project && project.comingSoon;
-  const nda = "nda" in project && project.nda;
-  const [open, setOpen] = useState(false);
   const card = (
     <>
       <div className="project-frame">
@@ -217,12 +214,6 @@ function ProjectCard({ project, index }: { project: (typeof projects)[number]; i
             ? <img className="project-image" src={project.image} alt="" />
             : <AssetPlaceholder path={project.asset} kind="project" />}
           {comingSoon ? <p className="coming-soon"><span>Coming soon</span></p> : null}
-          {nda ? (
-            <div className="card-gate">
-              <Lock aria-hidden="true" />
-              <p>Under NDA, contact to know more</p>
-            </div>
-          ) : null}
         </div>
       </div>
       <Plaque className="project-plaque" dots>
@@ -239,12 +230,8 @@ function ProjectCard({ project, index }: { project: (typeof projects)[number]; i
         <div className="project-card is-coming-soon" aria-label={`${project.title}, coming soon`}>
           {card}
         </div>
-      ) : nda ? (
-        <button type="button" className={`project-card is-gated${open ? " is-open" : ""}`} aria-expanded={open} aria-label={`${project.title}, under NDA`} onClick={() => setOpen((value) => !value)}>
-          {card}
-        </button>
       ) : (
-        <Link to={project.href} target="_blank" rel="noreferrer" className="project-card" aria-label={`View ${project.title} case study`}>
+        <Link to={project.href} className="project-card" aria-label={`View ${project.title} case study`}>
           {card}
         </Link>
       )}
