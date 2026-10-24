@@ -167,17 +167,92 @@ function SectionHeading({ children, dark = false, className = "" }: { children: 
   return <h2 className={`section-heading ${dark ? "section-heading-light" : ""} ${className}`}>{children}</h2>;
 }
 
+const heroPhrases = ["digital products.", "tangible interactions.", "playable experiments.", "working prototypes."] as const;
+
+function HeroPhrase() {
+  const [index, setIndex] = useState(0);
+  const [phase, setPhase] = useState<"shown" | "out" | "in">("shown");
+
+  useEffect(() => {
+    const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (motion.matches) return;
+
+    let holdTimer = 0;
+    let moveTimer = 0;
+    let frame = 0;
+    let active = true;
+
+    const clear = () => {
+      window.clearTimeout(holdTimer);
+      window.clearTimeout(moveTimer);
+      window.cancelAnimationFrame(frame);
+    };
+
+    const arm = () => {
+      clear();
+      if (!active || document.hidden) return;
+      holdTimer = window.setTimeout(() => {
+        setPhase("out");
+        moveTimer = window.setTimeout(() => {
+          setIndex((current) => (current + 1) % heroPhrases.length);
+          setPhase("in");
+          frame = window.requestAnimationFrame(() => {
+            frame = window.requestAnimationFrame(() => {
+              if (!active) return;
+              setPhase("shown");
+              arm();
+            });
+          });
+        }, 450);
+      }, 3000);
+    };
+
+    const onVisibility = () => {
+      if (document.hidden) {
+        clear();
+        return;
+      }
+      setPhase("shown");
+      arm();
+    };
+
+    document.addEventListener("visibilitychange", onVisibility);
+    arm();
+
+    return () => {
+      active = false;
+      clear();
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
+  }, []);
+
+  const phrase = heroPhrases[index] ?? heroPhrases[0];
+
+  return (
+    <span className="hero-phrase">
+      <span className="hero-phrase-sizer" aria-hidden="true">playable experiments.</span>
+      <span className={`hero-phrase-text is-${phase}`} aria-live="polite">{phrase}</span>
+    </span>
+  );
+}
+
 function Hero() {
   return (
     <section id="top" className="hero site-container" aria-labelledby="hero-title">
       <div className="hero-copy">
         <h1 id="hero-title" className="hero-title">
-          I like asking the <span>“why”</span><br />before I start designing.
+          Somewhere between <span>designing it</span> and figuring out <span>how to build it</span>.
         </h1>
-        <p className="hero-intro">
-          I’m Anarghya<br />an Experience Designer interested in<br />
-          <em>understanding human behavior, interaction<br className="desktop-break" /> design, and bringing ideas to life through code.</em>
-        </p>
+        <div className="hero-intro">
+          <p className="hero-intro-lead">
+            I’m Anarghya, an engineer<br />
+            turned Product Designer.
+          </p>
+          <p className="hero-intro-follow">
+            I like bringing ideas to life as
+            <HeroPhrase />
+          </p>
+        </div>
       </div>
       <div className="portrait-wrap">
         <img

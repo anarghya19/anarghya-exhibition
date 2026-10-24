@@ -97,7 +97,10 @@ export function AlchemicProduct() {
         </figure>
         <div className="alc-site-outcome">
           <p className="alc-kicker">After launch</p>
-          <p className="alc-site-outcome-line">It was easier for clients to skim through the insights.</p>
+          <p className="alc-site-outcome-line">
+            It was easier for clients <br className="alc-outcome-mobile-break" />
+            to skim through the insights.
+          </p>
           <p className="case-chapter-copy">Too much information that was generated was clearly organised.</p>
         </div>
         <div className="alc-product-admin">

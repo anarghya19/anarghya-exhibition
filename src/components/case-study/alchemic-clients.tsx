@@ -208,8 +208,13 @@ export function AlchemicClients() {
         </div>
         <ClientPhones apps={apps} />
         <p className="alc-clients-takeaway">
-          <span>The specification helped turn design decisions into</span>
-          <span>instructions I could build and refine.</span>
+          <span>
+            The specification helped turn design decisions <span className="alc-clients-into">into</span>
+          </span>
+          <span>
+            <span className="alc-clients-into-next">into </span>
+            instructions I could build and refine.
+          </span>
         </p>
       </div>
     </section>

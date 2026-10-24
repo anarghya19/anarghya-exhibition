@@ -18,6 +18,7 @@ export type AlchemicShot = {
 export type AlchemicPageAsset = {
   id: string;
   tab: string;
+  heading: string;
   wireframe: AlchemicShot;
   live: AlchemicShot;
   url?: string;
@@ -40,6 +41,7 @@ export const alchemicWebsiteAssets: {
     {
       id: "solutions",
       tab: "Solutions ( Packaging Testing )",
+      heading: "Solution",
       wireframe: {
         file: "Solutions Lofi.webp",
         src: solutionsWireframe,
@@ -57,6 +59,7 @@ export const alchemicWebsiteAssets: {
     {
       id: "technology",
       tab: "Technology ( AI Insights )",
+      heading: "Technology",
       wireframe: {
         file: "AI insights lofi.webp",
         src: technologyWireframe,
@@ -192,50 +195,13 @@ function BrowserPreview({ item }: { item: AlchemicShippedAsset }) {
   );
 }
 
-function WebsiteCompare() {
-  const { pages } = alchemicWebsiteAssets;
-  const baseId = useId();
-  const [activeId, setActiveId] = useState(pages[0]?.id ?? "solutions");
+function WebsitePage({ page, labelledBy }: { page: AlchemicPageAsset; labelledBy: string }) {
   const [mobileView, setMobileView] = useState<"wireframe" | "live">("wireframe");
-  const page = pages.find((item) => item.id === activeId) ?? pages[0];
-
-  if (!page) return null;
-
-  const selectPage = (id: string) => {
-    setActiveId(id);
-    setMobileView("wireframe");
-  };
-
-  const onTabKey = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
-    if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") return;
-    event.preventDefault();
-    const next = event.key === "ArrowRight" ? (index + 1) % pages.length : (index - 1 + pages.length) % pages.length;
-    const nextPage = pages[next];
-    if (!nextPage) return;
-    selectPage(nextPage.id);
-    document.getElementById(`${baseId}-${nextPage.id}`)?.focus();
-  };
 
   return (
-    <div className="alc-site-compare">
-      <div className="alc-site-tabs" role="tablist" aria-label="Website pages">
-        {pages.map((item, index) => (
-          <button
-            key={item.id}
-            id={`${baseId}-${item.id}`}
-            type="button"
-            role="tab"
-            aria-selected={item.id === page.id}
-            aria-controls={`${baseId}-panel`}
-            tabIndex={item.id === page.id ? 0 : -1}
-            onClick={() => selectPage(item.id)}
-            onKeyDown={(event) => onTabKey(event, index)}
-          >
-            {item.tab}
-          </button>
-        ))}
-      </div>
-      <div className="alc-site-tabs alc-site-toggle" role="group" aria-label="Preview">
+    <div className="alc-site-page-body">
+      <h3 className="alc-site-page-heading">{page.heading}</h3>
+      <div className="alc-site-tabs alc-site-toggle" role="group" aria-label={`${page.heading} preview`}>
         <button type="button" aria-pressed={mobileView === "wireframe"} onClick={() => setMobileView("wireframe")}>
           Wireframe
         </button>
@@ -243,13 +209,7 @@ function WebsiteCompare() {
           Live Website
         </button>
       </div>
-      <div
-        id={`${baseId}-panel`}
-        className="alc-site-split"
-        role="tabpanel"
-        aria-labelledby={`${baseId}-${page.id}`}
-        data-view={mobileView}
-      >
+      <div className="alc-site-split" role="tabpanel" aria-labelledby={labelledBy} data-view={mobileView}>
         <div className="alc-site-pane alc-site-pane-wire">
           <p className="alc-site-label">Paper wireframe</p>
           <div className="alc-site-scroll" key={`${page.id}-wire`}>
@@ -268,6 +228,52 @@ function WebsiteCompare() {
           </a>
         </p>
       ) : null}
+    </div>
+  );
+}
+
+function WebsiteCompare() {
+  const { pages } = alchemicWebsiteAssets;
+  const baseId = useId();
+  const [activeId, setActiveId] = useState(pages[0]?.id ?? "solutions");
+  const page = pages.find((item) => item.id === activeId) ?? pages[0];
+
+  if (!page) return null;
+
+  const onTabKey = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
+    if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") return;
+    event.preventDefault();
+    const next = event.key === "ArrowRight" ? (index + 1) % pages.length : (index - 1 + pages.length) % pages.length;
+    const nextPage = pages[next];
+    if (!nextPage) return;
+    setActiveId(nextPage.id);
+    document.getElementById(`${baseId}-${nextPage.id}`)?.focus();
+  };
+
+  return (
+    <div className="alc-site-compare">
+      <div className="alc-site-tabs" role="tablist" aria-label="Website pages">
+        {pages.map((item, index) => (
+          <button
+            key={item.id}
+            id={`${baseId}-${item.id}`}
+            type="button"
+            role="tab"
+            aria-selected={item.id === page.id}
+            aria-controls={`${baseId}-${item.id}-panel`}
+            tabIndex={item.id === page.id ? 0 : -1}
+            onClick={() => setActiveId(item.id)}
+            onKeyDown={(event) => onTabKey(event, index)}
+          >
+            {item.tab}
+          </button>
+        ))}
+      </div>
+      {pages.map((item) => (
+        <div key={item.id} id={`${baseId}-${item.id}-panel`} data-page={item.id} className={item.id === page.id ? "alc-site-page is-active" : "alc-site-page"}>
+          <WebsitePage page={item} labelledBy={`${baseId}-${item.id}`} />
+        </div>
+      ))}
     </div>
   );
 }
