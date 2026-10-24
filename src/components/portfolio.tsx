@@ -241,15 +241,13 @@ function Hero() {
     <section id="top" className="hero site-container" aria-labelledby="hero-title">
       <div className="hero-copy">
         <h1 id="hero-title" className="hero-title">
-          Somewhere between <span>designing it</span> and figuring out <span>how to build it</span>.
+          <span className="hero-headline-line">Somewhere between <em className="hero-title-accent">designing it</em></span>{" "}
+          <span className="hero-headline-line">and figuring out <em className="hero-title-accent">how to build it.</em></span>
         </h1>
         <div className="hero-intro">
-          <p className="hero-intro-lead">
-            I’m Anarghya, an engineer<br />
-            turned Product Designer.
-          </p>
+          <p className="hero-intro-lead">I’m Anarghya, an engineer turned Product Designer.</p>
           <p className="hero-intro-follow">
-            I like bringing ideas to life as
+            <span className="hero-intro-prompt">I like bringing ideas to life as</span>
             <HeroPhrase />
           </p>
         </div>
