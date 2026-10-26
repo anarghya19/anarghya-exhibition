@@ -1,0 +1,41 @@
+.built-glimpse {
+  padding: 40px 0 32px;
+  overflow: hidden;
+  background: #EEE6D9;
+  color: #6F0F18;
+}
+.built-glimpse-header { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 24px; }
+.built-glimpse-header h2 { margin: 0; font: italic 400 32px/1.15 var(--font-serif); }
+.built-glimpse-link { display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0; min-height: 44px; color: #6F0F18; font: 400 16px/1.4 var(--font-sans); text-decoration: none; transition: color 225ms ease; }
+.built-glimpse-link:hover, .built-glimpse-link:active { color: #4A0910; }
+.built-glimpse-link svg { width: 1em; height: 1em; flex-shrink: 0; }
+.built-glimpse-link:focus-visible { outline: 2px solid #6F0F18; outline-offset: 4px; }
+.built-glimpse-strip { --preview-width: clamp(286px, 23vw, 330px); --preview-gap: 16px; overflow: hidden; padding: 3px 0 4px; }
+.built-glimpse-strip:focus-visible { outline-offset: -4px; outline: 2px solid #6F0F18; }
+.built-glimpse-track { position: relative; display: flex; width: max-content; animation: built-glimpse-drift 70s linear infinite; animation-play-state: paused; will-change: transform; }
+.built-glimpse[data-moving="true"] .built-glimpse-track { animation-play-state: running; }
+.built-glimpse-strip:hover .built-glimpse-track, .built-glimpse-strip:focus-within .built-glimpse-track { animation-play-state: paused; }
+.built-glimpse-group { display: flex; gap: var(--preview-gap); padding-right: var(--preview-gap); }
+.built-glimpse-frame { flex: 0 0 var(--preview-width); width: var(--preview-width); aspect-ratio: 3 / 2; overflow: hidden; border: 1px solid #B49A70; border-radius: 5px; background: #081825; }
+.built-glimpse-frame[data-project="Gmail Pulse"] { background: #F5FBFC; }
+.built-glimpse-frame img, .built-glimpse-frame video { display: block; width: 100%; height: 100%; object-fit: contain; }
+@keyframes built-glimpse-drift { to { transform: translateX(-50%); } }
+@media (min-width: 768px) and (max-width: 1199px) {
+  .built-glimpse { padding-top: 36px; padding-bottom: 28px; }
+  .built-glimpse-header h2 { font-size: 28px; }
+  .built-glimpse-link { font-size: 14px; }
+  .built-glimpse-strip { --preview-width: min(34vw, 300px); --preview-gap: 14px; }
+}
+@media (max-width: 767px) {
+  .built-glimpse { padding: 32px 0 20px; }
+  .built-glimpse-header { align-items: flex-start; flex-direction: column; gap: 4px; margin-bottom: 16px; }
+  .built-glimpse-header h2 { font-size: 24px; }
+  .built-glimpse-link { font-size: 12px; }
+  .built-glimpse-strip { --preview-width: 76vw; --preview-gap: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .built-glimpse-track { animation: none; will-change: auto; }
+  .built-glimpse-strip { overflow-x: auto; }
+  .built-glimpse-link { transition: none; }
+  .built-glimpse-group[aria-hidden="true"], .built-glimpse-frame[aria-hidden="true"] { display: none; }
+}

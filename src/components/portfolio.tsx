@@ -22,6 +22,7 @@ import jurassicExperiment from "../../assets/Jurassic escape - Desktop final.web
 import jurassicVideo from "../../assets/The Jurassic Escape desktop (1)-compressed.mp4";
 import lumaireExperiment from "../../assets/Lumaire.webp";
 import { Button } from "@/components/ui/button";
+import { BuiltGlimpse } from "./built-glimpse";
 
 const projects = [
   {
@@ -138,6 +139,15 @@ function AssetPlaceholder({ path, kind }: { path: string; kind: "portrait" | "pr
   );
 }
 
+function ResumeTicketLabel() {
+  return <>
+    <svg className="resume-ticket-outline" viewBox="0 0 120 44" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <path d="M3 .75 H117 Q119.25 .75 119.25 3 V17 A5 5 0 0 0 119.25 27 V41 Q119.25 43.25 117 43.25 H3 Q.75 43.25 .75 41 V27 A5 5 0 0 0 .75 17 V3 Q.75 .75 3 .75 Z" vectorEffect="non-scaling-stroke" />
+    </svg>
+    <span>Resume</span>
+  </>;
+}
+
 function Navbar() {
   const [open, setOpen] = useState(false);
   const close = () => setOpen(false);
@@ -150,9 +160,9 @@ function Navbar() {
           <a href="#work" onClick={close}>Work</a>
           <a href="#experiments" onClick={close}>Experiments</a>
           <a href="#about" onClick={close}>About</a>
-          <a href="https://drive.google.com/file/d/1rty1WM8ae-9wCtcvp9i9Any3fwtxRpph/view?usp=sharing" target="_blank" rel="noreferrer" onClick={close}>Resume</a>
+          <a href="https://drive.google.com/file/d/1rty1WM8ae-9wCtcvp9i9Any3fwtxRpph/view?usp=sharing" target="_blank" rel="noreferrer" onClick={close}><ResumeTicketLabel /></a>
         </nav>
-        <a className="resume-link" href="https://drive.google.com/file/d/1rty1WM8ae-9wCtcvp9i9Any3fwtxRpph/view?usp=sharing" target="_blank" rel="noreferrer">Resume</a>
+        <a className="resume-link" href="https://drive.google.com/file/d/1rty1WM8ae-9wCtcvp9i9Any3fwtxRpph/view?usp=sharing" target="_blank" rel="noreferrer"><ResumeTicketLabel /></a>
         <Button variant="ghost" size="icon" className="menu-button" aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} onClick={() => setOpen((value) => !value)}>
           {open ? <X /> : <Menu />}
         </Button>
@@ -242,14 +252,22 @@ function Hero() {
       <div className="hero-copy">
         <h1 id="hero-title" className="hero-title">
           <span className="hero-headline-line">Somewhere between <em className="hero-title-accent">designing it</em></span>{" "}
-          <span className="hero-headline-line">and figuring out <em className="hero-title-accent">how to build it.</em></span>
+          <span className="hero-headline-line">&amp; figuring out <em className="hero-title-accent">how to build it.</em></span>
         </h1>
         <div className="hero-intro">
-          <p className="hero-intro-lead">I’m Anarghya, an engineer turned Product Designer.</p>
+          <p className="hero-intro-lead">
+            <span className="hero-intro-line">I'm Anarghya, an engineer turned Product</span>{" "}
+            <span className="hero-intro-line">Designer who enjoys turning ideas into</span>
+          </p>
           <p className="hero-intro-follow">
-            <span className="hero-intro-prompt">I like bringing ideas to life as</span>
             <HeroPhrase />
           </p>
+          <a className="hero-explore" href="#work">
+            <svg className="hero-explore-outline" viewBox="0 0 120 44" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+              <path d="M3 .75 H117 Q119.25 .75 119.25 3 V17 A5 5 0 0 0 119.25 27 V41 Q119.25 43.25 117 43.25 H3 Q.75 43.25 .75 41 V27 A5 5 0 0 0 .75 17 V3 Q.75 .75 3 .75 Z" vectorEffect="non-scaling-stroke" />
+            </svg>
+            <span>Explore Work</span>
+          </a>
         </div>
       </div>
       <div className="portrait-wrap">
@@ -470,5 +488,5 @@ function ContactSection() {
 }
 
 export function Portfolio() {
-  return <><Navbar /><Hero /><WorkSection /><CapabilitySection /><ExperimentsSection /><ContactSection /></>;
+  return <><Navbar /><Hero /><BuiltGlimpse previews={experiments} /><WorkSection /><CapabilitySection /><ExperimentsSection /><ContactSection /></>;
 }
