@@ -18,8 +18,8 @@ export function BuiltGlimpse({ previews }: { previews: Preview[] }) {
     const group = track.querySelector<HTMLElement>(".built-glimpse-group")!;
     const videos = Array.from(node.querySelectorAll("video"));
     let visible = false;
-    let hovered = ribbon.matches(":hover");
-    let focused = ribbon.contains(document.activeElement);
+    
+    
     let frame = 0;
     let lastTime: number | null = null;
     let offset = 0;
@@ -32,13 +32,13 @@ export function BuiltGlimpse({ previews }: { previews: Preview[] }) {
       track.style.transform = `translate3d(${-offset}px, 0, 0)`;
       const mobile = half * 2 < 768;
       const tablet = half * 2 < 1200;
-      const maxAngle = mobile ? 4 : tablet ? 8 : 14;
-      const depth = mobile ? 10 : tablet ? 22 : 36;
+      const maxAngle = mobile ? 10 : tablet ? 17 : 22;
+      const depth = mobile ? 45 : tablet ? 75 : 110;
       cards.forEach((card, index) => {
         const position = (centres[index] - offset - half) / half;
         const distance = Math.max(-1, Math.min(1, position));
         const bend = distance * distance;
-        card.style.transform = `perspective(1100px) translate3d(0, ${bend * 2}px, ${-bend * depth}px) rotateY(${-distance * maxAngle}deg)`;
+        card.style.transform = `perspective(1100px) translate3d(0, ${bend * 6}px, ${-bend * depth}px) rotateY(${-distance * maxAngle}deg) scale(${1.07 - bend * 0.07})`;
       });
     };
     const measure = () => {
@@ -65,7 +65,7 @@ export function BuiltGlimpse({ previews }: { previews: Preview[] }) {
       const playing = visible && !document.hidden && !motion.matches;
       if (playing) {
         setLoadVideo(true);
-        if (!hovered && !focused) frame = window.requestAnimationFrame(tick);
+        frame = window.requestAnimationFrame(tick);
       }
       videos.forEach((video) => {
         if (playing) void video.play().catch(() => {});
@@ -81,13 +81,6 @@ export function BuiltGlimpse({ previews }: { previews: Preview[] }) {
       } else measure();
       sync();
     };
-    const onEnter = () => { hovered = true; sync(); };
-    const onLeave = () => { hovered = false; sync(); };
-    const onFocus = () => { focused = true; sync(); };
-    const onBlur = (event: FocusEvent) => {
-      focused = event.relatedTarget instanceof Node && ribbon.contains(event.relatedTarget);
-      sync();
-    };
     const resize = new ResizeObserver(measure);
     resize.observe(ribbon);
     resize.observe(group);
@@ -97,19 +90,11 @@ export function BuiltGlimpse({ previews }: { previews: Preview[] }) {
       sync();
     });
     observer.observe(ribbon);
-    ribbon.addEventListener("pointerenter", onEnter);
-    ribbon.addEventListener("pointerleave", onLeave);
-    ribbon.addEventListener("focusin", onFocus);
-    ribbon.addEventListener("focusout", onBlur);
     document.addEventListener("visibilitychange", sync);
     motion.addEventListener("change", onMotion);
     return () => {
       observer.disconnect();
       resize.disconnect();
-      ribbon.removeEventListener("pointerenter", onEnter);
-      ribbon.removeEventListener("pointerleave", onLeave);
-      ribbon.removeEventListener("focusin", onFocus);
-      ribbon.removeEventListener("focusout", onBlur);
       document.removeEventListener("visibilitychange", sync);
       motion.removeEventListener("change", onMotion);
       window.cancelAnimationFrame(frame);
@@ -124,7 +109,7 @@ export function BuiltGlimpse({ previews }: { previews: Preview[] }) {
           View Experiments
         </a>
       </div>
-      <div ref={strip} className="built-glimpse-strip" tabIndex={0} role="region" aria-label="Project previews: Jurassic Escape, Lumaire, and Gmail Pulse. Focus to pause movement.">
+      <div ref={strip} className="built-glimpse-strip" tabIndex={0} role="region" aria-label="Project previews: Jurassic Escape, Lumaire, and Gmail Pulse. Automatic motion.">
         <div className="built-glimpse-track">
           {[0, 1].map((group) => (
             <div className="built-glimpse-group" key={group} aria-hidden={group === 1 ? true : undefined}>
