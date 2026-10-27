@@ -236,6 +236,162 @@ function HeroPhrase() {
   );
 }
 
+
+function InteractivePortrait() {
+  const imageRef = useRef<HTMLImageElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const rafRef = useRef<number>(0);
+  const stampsRef = useRef<Array<{ x: number; y: number; start: number; seed: number }>>([]);
+  const lastPointerRef = useRef(0);
+
+  useEffect(() => {
+    const image = imageRef.current;
+    const canvas = canvasRef.current;
+    if (!image || !canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const blockSize = 8;
+    const pixelSource = document.createElement("canvas");
+    const pixelCtx = pixelSource.getContext("2d", { willReadFrequently: true });
+    if (!pixelCtx) return;
+    let width = 0;
+    let height = 0;
+    let disposed = false;
+    let introTimer = 0;
+    let stampSeed = 0;
+    const lifetime = 780;
+
+    const configure = () => {
+      if (disposed || !image.complete || !image.naturalWidth) return;
+      const rect = image.getBoundingClientRect();
+      width = Math.round(rect.width);
+      height = Math.round(rect.height);
+      if (!width || !height) return;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      pixelSource.width = Math.ceil(width / blockSize);
+      pixelSource.height = Math.ceil(height / blockSize);
+      pixelCtx.clearRect(0, 0, pixelSource.width, pixelSource.height);
+      pixelCtx.drawImage(image, 0, 0, pixelSource.width, pixelSource.height);
+    };
+
+    const render = (now: number) => {
+      rafRef.current = 0;
+      ctx.clearRect(0, 0, width, height);
+      if (reducedMotion.matches || document.hidden || !width) {
+        stampsRef.current = [];
+        return;
+      }
+      stampsRef.current = stampsRef.current.filter(s => now - s.start < lifetime);
+      ctx.imageSmoothingEnabled = false;
+      for (const stamp of stampsRef.current) {
+        const progress = Math.max(0, (now - stamp.start) / lifetime);
+        const fade = Math.pow(1 - progress, 1.5);
+        const cx = Math.floor(stamp.x / blockSize);
+        const cy = Math.floor(stamp.y / blockSize);
+        const radius = 7;
+        for (let gy = cy - radius; gy <= cy + radius; gy++) {
+          if (gy < 0 || gy >= pixelSource.height) continue;
+          for (let gx = cx - radius; gx <= cx + radius; gx++) {
+            if (gx < 0 || gx >= pixelSource.width) continue;
+            const dx = gx - cx, dy = gy - cy;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            if (distance > radius) continue;
+            // Irregular, separated clusters rather than a circular cursor spotlight.
+            const noise = ((gx * 73 + gy * 131 + stamp.seed * 41) % 101 + 101) % 101 / 101;
+            if (noise > (0.84 - distance * 0.072) * fade) continue;
+            ctx.globalAlpha = Math.min(0.92, fade * (0.68 + noise * 0.28));
+            ctx.drawImage(pixelSource, gx, gy, 1, 1, gx * blockSize, gy * blockSize, blockSize, blockSize);
+          }
+        }
+      }
+      ctx.globalAlpha = 1;
+      if (stampsRef.current.length) rafRef.current = window.requestAnimationFrame(render);
+    };
+
+    const addStamp = (x: number, y: number) => {
+      if (reducedMotion.matches || !width || !height) return;
+      stampsRef.current.push({ x, y, start: performance.now(), seed: ++stampSeed });
+      if (stampsRef.current.length > 9) stampsRef.current.shift();
+      if (!rafRef.current) rafRef.current = window.requestAnimationFrame(render);
+    };
+
+    const onPointerMove = (event: PointerEvent) => {
+      if (event.pointerType === "touch") return;
+      if (performance.now() - lastPointerRef.current < 58) return;
+      lastPointerRef.current = performance.now();
+      const rect = canvas.getBoundingClientRect();
+      addStamp(event.clientX - rect.left, event.clientY - rect.top);
+    };
+    const onPointerDown = (event: PointerEvent) => {
+      if (event.pointerType !== "touch" && event.pointerType !== "pen") return;
+      const rect = canvas.getBoundingClientRect();
+      addStamp(event.clientX - rect.left, event.clientY - rect.top);
+    };
+    const onVisibilityChange = () => {
+      if (document.hidden) {
+        stampsRef.current = [];
+        ctx.clearRect(0, 0, width, height);
+      }
+    };
+    const onMotionChange = () => {
+      if (reducedMotion.matches) {
+        stampsRef.current = [];
+        window.cancelAnimationFrame(rafRef.current);
+        rafRef.current = 0;
+        ctx.clearRect(0, 0, width, height);
+      }
+    };
+
+    const observer = new ResizeObserver(configure);
+    observer.observe(image);
+    image.addEventListener("load", configure);
+    canvas.addEventListener("pointermove", onPointerMove);
+    canvas.addEventListener("pointerdown", onPointerDown);
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    reducedMotion.addEventListener("change", onMotionChange);
+    configure();
+    // A single unobtrusive preview helps visitors discover the interaction.
+    introTimer = window.setTimeout(() => {
+      if (!reducedMotion.matches && !document.hidden) addStamp(width * 0.7, height * 0.36);
+    }, 1100);
+
+    return () => {
+      disposed = true;
+      window.clearTimeout(introTimer);
+      window.cancelAnimationFrame(rafRef.current);
+      observer.disconnect();
+      image.removeEventListener("load", configure);
+      canvas.removeEventListener("pointermove", onPointerMove);
+      canvas.removeEventListener("pointerdown", onPointerDown);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+      reducedMotion.removeEventListener("change", onMotionChange);
+    };
+  }, []);
+
+  return (
+    <div className="portrait-exhibit">
+      <div className="portrait-wrap">
+        <img ref={imageRef} src={portrait} alt="Portrait of Anarghya" width={394} height={507}
+          fetchPriority="high" decoding="async" />
+        <canvas ref={canvasRef} className="portrait-pixels" aria-hidden="true" />
+      </div>
+      <div className="portrait-footnote">
+        <p className="portrait-footnote-thought">It's the little changes that make the final piece.</p>
+        <p className="portrait-footnote-cue">
+          <span className="portrait-cue-desktop">Hover over the portrait.</span>
+          <span className="portrait-cue-touch">Tap the portrait.</span>
+          {" "}Watch the pixels change.
+        </p>
+      </div>
+    </div>
+  );
+}
+
 function Hero() {
   return (
     <section id="top" className="hero site-container" aria-labelledby="hero-title">
@@ -254,16 +410,7 @@ function Hero() {
           </p>
         </div>
       </div>
-      <div className="portrait-wrap">
-        <img
-          src={portrait}
-          alt="Portrait of Anarghya"
-          width={394}
-          height={507}
-          fetchPriority="high"
-          decoding="async"
-        />
-      </div>
+      <InteractivePortrait />
     </section>
   );
 }
