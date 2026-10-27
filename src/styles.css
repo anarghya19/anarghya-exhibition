@@ -864,3 +864,30 @@ button.experiment-frame { display: block; width: 100%; padding: 0; color: inheri
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
 }
+
+/* Living portrait: the original image and desktop hero geometry remain unchanged. */
+.portrait-exhibit { align-self: start; width: 394px; min-width: 0; }
+.portrait-exhibit .portrait-wrap { position: relative; }
+.portrait-pixels { position: absolute; inset: 0; display: block; width: 100%; height: 100%; touch-action: pan-y; }
+.portrait-footnote { max-width: 394px; margin-top: 17px; color: var(--burgundy); }
+.portrait-footnote-thought { margin: 0; font: italic 400 17px/1.35 var(--font-serif); }
+.portrait-footnote-cue { margin: 10px 0 0; font: 500 13px/1.45 var(--font-sans); }
+.portrait-cue-touch { display: none; }
+@media (max-width: 1199px) {
+  .portrait-exhibit { width: 100%; }
+}
+@media (max-width: 900px) {
+  .portrait-exhibit { justify-self: end; width: min(58vw, 394px); margin-top: 45px; }
+  .portrait-exhibit .portrait-wrap { width: 100%; margin-top: 0; }
+  .portrait-cue-desktop { display: none; }
+  .portrait-cue-touch { display: inline; }
+}
+@media (max-width: 767px) {
+  .portrait-exhibit { width: min(62vw, 250px); margin-top: 40px; }
+  .portrait-footnote { margin-top: 12px; }
+  .portrait-footnote-thought { font-size: 15px; }
+  .portrait-footnote-cue { font-size: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .portrait-pixels { display: none; }
+}
