@@ -10,6 +10,7 @@ import { LinedUpWork } from "./next-project";
 import { ProjectBrief } from "./project-brief";
 import { ProjectHero } from "./project-hero";
 import { ProjectMetadata } from "./project-metadata";
+import "./case-study-gallery.css";
 
 /** Replace with the published Giggles Behance case-study URL. */
 const GIGGLES_BEHANCE_URL = "https://www.behance.net/gallery/256015117/Giggles-A-Tangible-Learning-game";
@@ -70,16 +71,21 @@ export function CaseStudyPage({ study }: { study: CaseStudy }) {
   return (
     <article className={`case-study-shell${study.slug === "alchemic" ? " is-alchemic" : ""}${study.slug === "giggles" ? " is-giggles" : ""}${study.slug === "onecare" ? " is-onecare" : ""}`}>
       <CaseStudyHeader />
+      <section className="case-gallery-wall case-gallery-top" aria-label={`${study.title} project introduction`}>
+        <div className="case-gallery-noise" aria-hidden="true" />
+        <div className="case-gallery-inside">
+          <ProjectHero title={study.title} tagline={study.tagline} image={study.heroImage} />
+          <ProjectMetadata
+            projectType={study.projectType}
+            duration={study.duration}
+            team={study.team}
+            role={study.role}
+            {...(study.slug === "alchemic" ? { lineup: study.lineup, roleLabel: "Role" } : {})}
+            {...(study.slug === "giggles" ? { roleLabel: "Context" } : {})}
+          />
+        </div>
+      </section>
       <div className="site-container case-study-body">
-        <ProjectHero title={study.title} tagline={study.tagline} image={study.heroImage} />
-        <ProjectMetadata
-          projectType={study.projectType}
-          duration={study.duration}
-          team={study.team}
-          role={study.role}
-          {...(study.slug === "alchemic" ? { lineup: study.lineup, roleLabel: "Role" } : {})}
-          {...(study.slug === "giggles" ? { roleLabel: "Context" } : {})}
-        />
         {study.slug === "alchemic" ? <AlchemicStory /> : study.slug === "giggles" ? (
           <>
             <ProjectBrief problem={study.problem} solution={study.solution} visual={study.briefVisual} image={study.briefImage} {...(study.briefStatement ? { statement: study.briefStatement } : {})} showHeadings={study.showBriefHeadings !== false} title="At a glance" />

@@ -1,0 +1,11 @@
+.glimpse-preview { min-height: 100vh; padding: 24px; background: #ded8cd; color: #6F0F18; font-family: var(--font-sans); }
+.glimpse-preview-toolbar { max-width: 1440px; margin: 0 auto 24px; }
+.glimpse-preview-toolbar h1 { margin: 0 0 16px; font: 500 18px/1.4 var(--font-sans); }
+.glimpse-preview-sizes { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.glimpse-preview-sizes button { padding: 8px 12px; border: 1px solid #6F0F18; border-radius: 4px; font: 14px var(--font-sans); cursor: pointer; }
+.glimpse-preview-sizes button[aria-pressed="true"] { background: #6F0F18; color: #EEE6D9; }
+.glimpse-preview-sizes button:focus-visible { outline: 2px solid #6F0F18; outline-offset: 3px; }
+.glimpse-preview-sizes label { display: flex; align-items: center; gap: 6px; margin-left: 8px; font-size: 13px; }
+.glimpse-preview-area { width: 100%; overflow: auto; }
+.glimpse-preview-device { position: relative; margin-inline: auto; }
+.glimpse-preview-device iframe { position: absolute; inset: 0 auto auto 0; display: block; max-width: none; border: 0; transform-origin: top left; background: #EEE6D9; }

@@ -1081,3 +1081,6 @@ button.experiment-frame { display: block; width: 100%; padding: 0; color: inheri
   .hero-title { font-size: calc(29px - 4pt); }
   .hero .portrait-wrap { width: min(64vw, 240px); }
 }
+
+/* Annotated journey heading refinement across viewport sizes. */
+.capability-section .bring-heading { font-family: var(--font-serif); font-size: 36px; font-style: italic; }

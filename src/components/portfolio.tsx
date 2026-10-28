@@ -1,10 +1,9 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { createPortal } from "react-dom";
-import { ArrowLeft, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import portrait from "../../assets/Anarghya Profile.webp";
 import goldenDot from "../../assets/Golden dot.png";
-import bringTable from "../../assets/what I bring to table.webp";
+import { BringJourney } from "./bring-journey";
 import favicon from "../../assets/Favicon.png";
 import figmaIcon from "../../assets/Figma.png";
 import illustratorIcon from "../../assets/Illustrator.png";
@@ -17,12 +16,17 @@ import alchemicThumb from "../../assets/Alchemic Thumbnail.webp";
 import gigglesThumb from "../../assets/Giggles Thumbnail.webp";
 import fnpThumb from "../../assets/FNP Thumbnail.webp";
 import inviteCard from "../../assets/Exhibition invite card footer.webp";
-import gmailExperiment from "../../assets/Gmail.webp";
+import outdriveExperiment from "../../assets/outdrive-cover.webp";
 import jurassicExperiment from "../../assets/Jurassic escape - Desktop final.webp";
 import jurassicVideo from "../../assets/The Jurassic Escape desktop (1)-compressed.mp4";
-import lumaireExperiment from "../../assets/Lumaire.webp";
+import jurassicPreview from "../../assets/jurassic-gallery-preview.mp4";
+import viceCityPreview from "../../assets/vice-city-gallery-preview.mp4";
+import outdrivePreview from "../../assets/outdrive-gallery-preview.mp4";
+import viceCityExperiment from "../../assets/vice-city-cover.webp";
 import { Button } from "@/components/ui/button";
 import { BuiltGlimpse } from "./built-glimpse";
+import { WorkGallery } from "./work-gallery";
+import { ExperimentsGallery } from "./experiments-gallery";
 
 const projects = [
   {
@@ -89,18 +93,25 @@ const experiments = [
       "A motion-controlled 3D game where players use real body movements to navigate obstacles and survive across Jurassic environments.",
     image: jurassicExperiment,
     video: jurassicVideo,
+    previewVideo: jurassicPreview,
   },
   {
-    title: "Lumaire",
+    title: "Vice City",
     description:
-      "A stained-glass inspired design system translating light, geometry and layered forms into a distinctive digital visual language.",
-    image: lumaireExperiment,
+      "An open-city arcade driving game: explore Vice Island, switch cars and take on the night shift.",
+    image: viceCityExperiment,
+    previewVideo: viceCityPreview,
+    game: "/games/vice-grid/index.html",
   },
   {
-    title: "Gmail Pulse",
+    title: "OUTDRIVE",
     description:
-      "An AI-assisted Gmail concept that surfaces actionable emails and helps users quickly identify what needs their attention.",
-    image: gmailExperiment,
+      "A neon Three.js driving game: steer the endless road, accelerate and see how far the night takes you.",
+    image: outdriveExperiment,
+    previewVideo: outdrivePreview,
+    game: "/games/outdrive/outdrive.html",
+    gameReturnLabel: "Back to Experiments",
+    gameHint: "Click inside to drive · WASD or arrow keys to steer, accelerate and brake",
   },
 ];
 
@@ -331,16 +342,7 @@ function ProjectCard({ project, index }: { project: (typeof projects)[number]; i
 }
 
 function WorkSection() {
-  return (
-    <section id="work" className="burgundy-section work-section" aria-labelledby="work-heading">
-      <div className="site-container">
-        <SectionHeading dark className="work-heading">Work</SectionHeading>
-        <div className="work-grid">
-          {projects.map((project, index) => <ProjectCard key={project.title} project={project} index={index} />)}
-        </div>
-      </div>
-    </section>
-  );
+  return <WorkGallery projects={projects} />;
 }
 
 function CapabilitySection() {
@@ -349,7 +351,7 @@ function CapabilitySection() {
       <div className="bring-wrap">
         <h2 id="about-heading" className="bring-heading">What I bring to the table?</h2>
         <div className="bring-stage">
-          <img className="bring-art" src={bringTable} alt="A burgundy ribbon connecting a magnifying glass, puzzle pieces, an open notebook, hanging cones, and wireframe blocks." width={2501} height={1912} />
+          <BringJourney />
         </div>
         <div className="bring-meta">
           <div>
@@ -357,7 +359,7 @@ function CapabilitySection() {
             <div className="tool-row">
               {tools.map((tool) => (
                 <span key={tool.name} className="tool-hit">
-                  <img className="tool-icon" src={tool.src} alt={tool.name} width={72} height={72} />
+                  <img className="tool-icon" src={tool.src} alt={tool.name} width={72} height={72} loading="lazy" decoding="async" />
                   <span className="tool-label" aria-hidden="true">{tool.name}</span>
                 </span>
               ))}
@@ -383,77 +385,14 @@ function CapabilitySection() {
   );
 }
 
-function GalleryLights() {
-  return (
-    <div className="lights" aria-hidden="true">
-      <div className="light-rail" />
-      {[0, 1, 2].map((light) => <div key={light} className={`light-unit light-${light + 1}`}><span><b className="light-bulb" /></span><i /></div>)}
-    </div>
-  );
-}
-
-function ExperimentCard({ experiment, index }: { experiment: (typeof experiments)[number]; index: number }) {
-  const video = "video" in experiment ? experiment.video : undefined;
-  const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [open]);
-
-  return (
-    <Reveal delay={index * 55} className="experiment-reveal">
-      <article className="experiment-card">
-        {video ? (
-          <button type="button" className="experiment-frame" aria-label={`Play ${experiment.title}`} onClick={() => setOpen(true)}>
-            <img className="experiment-image" src={experiment.image} alt="" />
-          </button>
-        ) : (
-          <div className="experiment-frame"><img className="experiment-image" src={experiment.image} alt="" /></div>
-        )}
-        <Plaque className="experiment-plaque"><h3>{experiment.title}</h3><p>{experiment.description}</p></Plaque>
-      </article>
-      {open && video
-        ? createPortal(
-            <div className="video-pop" role="dialog" aria-modal="true" aria-label={experiment.title}>
-              <div className="video-pop-window">
-                <button type="button" className="video-pop-cancel" aria-label="Cancel" onClick={() => setOpen(false)}><X /></button>
-                <video src={video} controls autoPlay playsInline />
-              </div>
-            </div>,
-            document.body,
-          )
-        : null}
-    </Reveal>
-  );
-}
-
 function ExperimentsSection() {
-  return (
-    <section id="experiments" className="burgundy-section experiments-section" aria-labelledby="experiments-heading">
-      <div className="site-container">
-        <SectionHeading dark className="work-heading">Experiments</SectionHeading>
-        <GalleryLights />
-        <div className="experiments-grid">
-          {experiments.map((experiment, index) => <ExperimentCard key={experiment.title} experiment={experiment} index={index} />)}
-        </div>
-        <p className="experiment-scroll">
-          Scroll Left
-          <ArrowLeft aria-hidden="true" />
-        </p>
-      </div>
-    </section>
-  );
+  return <ExperimentsGallery experiments={experiments} />;
 }
 
 function ContactTicket() {
   return (
     <div className="contact-ticket">
-      <img className="ticket-card" src={inviteCard} alt="" />
+      <img className="ticket-card" src={inviteCard} alt="" loading="lazy" decoding="async" />
       <div className="ticket-title"><span>Thanks for Visiting</span><strong>Curated by Anarghya</strong></div>
       <div className="ticket-divider" />
       <div className="ticket-links">
