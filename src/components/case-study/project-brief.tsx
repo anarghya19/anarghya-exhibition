@@ -43,6 +43,7 @@ export function ProjectBrief({
   title = "Project in brief",
   showHeadings = true,
   stacked = false,
+  demoHref,
 }: {
   problem: string;
   solution: string;
@@ -52,6 +53,7 @@ export function ProjectBrief({
   title?: string;
   showHeadings?: boolean;
   stacked?: boolean;
+  demoHref?: string;
 }) {
   return (
     <section className="case-brief" aria-labelledby="project-brief-title">
@@ -73,6 +75,7 @@ export function ProjectBrief({
           <div className="case-brief-box">
             {showHeadings ? <h3>Solution</h3> : null}
             <p>{solution}</p>
+            {demoHref ? <a className="case-brief-live-demo" href={demoHref} target="_blank" rel="noopener noreferrer">Live demo</a> : null}
           </div>
         </div>
       )}

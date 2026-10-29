@@ -1,39 +1,36 @@
+import { ResumeLink } from "./resume-viewer";
 import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { createPortal } from "react-dom";
-import { ArrowLeft, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import portrait from "../../assets/Anarghya Profile.webp";
 import goldenDot from "../../assets/Golden dot.png";
-import bringTable from "../../assets/what I bring to table.webp";
+import { BringJourney } from "./bring-journey";
 import favicon from "../../assets/Favicon.png";
-import figmaIcon from "../../assets/Figma.png";
-import illustratorIcon from "../../assets/Illustrator.png";
-import stitchIcon from "../../assets/Stitch.png";
-import cursorIcon from "../../assets/Cursor.png";
-import figmaMakeIcon from "../../assets/Figma make.png";
-import lovableIcon from "../../assets/Lovable.png";
+import figmaIcon from "../../assets/Figma.webp";
+import illustratorIcon from "../../assets/Illustrator.webp";
+import stitchIcon from "../../assets/Stitch.webp";
+import cursorIcon from "../../assets/Cursor.webp";
+import figmaMakeIcon from "../../assets/Figma make.webp";
+import lovableIcon from "../../assets/Lovable.webp";
 import onecareThumb from "../../assets/One care Thumbnail.webp";
 import alchemicThumb from "../../assets/Alchemic Thumbnail.webp";
 import gigglesThumb from "../../assets/Giggles Thumbnail.webp";
 import fnpThumb from "../../assets/FNP Thumbnail.webp";
 import inviteCard from "../../assets/Exhibition invite card footer.webp";
-import gmailExperiment from "../../assets/Gmail.webp";
+import outdriveExperiment from "../../assets/outdrive-cover.webp";
 import jurassicExperiment from "../../assets/Jurassic escape - Desktop final.webp";
 import jurassicVideo from "../../assets/The Jurassic Escape desktop (1)-compressed.mp4";
-import lumaireExperiment from "../../assets/Lumaire.webp";
+import jurassicPreview from "../../assets/jurassic-gallery-preview.mp4";
+import viceCityPreview from "../../assets/vice-city-gallery-preview.mp4";
+import outdrivePreview from "../../assets/outdrive-gallery-preview.mp4";
+import viceCityExperiment from "../../assets/vice-city-cover.webp";
 import { Button } from "@/components/ui/button";
+import { BuiltGlimpse } from "./built-glimpse";
+import { HeroPortrait } from "./hero-portrait";
+import { WorkGallery } from "./work-gallery";
+import { ExperimentsGallery } from "./experiments-gallery";
 
 const projects = [
-  {
-    title: "GIGGLES",
-    subtitle: "Tangible Interaction Game",
-    description:
-      "Designed and built a physical-digital game for autistic children, combining gameplay, tangible interaction, electronics and code.",
-    disciplines: "Interaction Design · Accessibility · Physical Computing",
-    href: "/work/giggles" as const,
-    asset: "/assets/work/giggles.webp",
-    image: gigglesThumb,
-  },
   {
     title: "ALCHEMIC (Summer Internship)",
     subtitle: "AI Customer Insights Platform",
@@ -53,6 +50,16 @@ const projects = [
     href: "/work/onecare" as const,
     asset: "/assets/work/onecare.webp",
     image: onecareThumb,
+  },
+  {
+    title: "GIGGLES",
+    subtitle: "Tangible Interaction Game",
+    description:
+      "Designed and built a physical-digital game for autistic children, combining gameplay, tangible interaction, electronics and code.",
+    disciplines: "Interaction Design · Accessibility · Physical Computing",
+    href: "/work/giggles" as const,
+    asset: "/assets/work/giggles.webp",
+    image: gigglesThumb,
   },
   {
     title: "FNP CIRCLE",
@@ -88,18 +95,25 @@ const experiments = [
       "A motion-controlled 3D game where players use real body movements to navigate obstacles and survive across Jurassic environments.",
     image: jurassicExperiment,
     video: jurassicVideo,
+    previewVideo: jurassicPreview,
   },
   {
-    title: "Lumaire",
+    title: "Vice City",
     description:
-      "A stained-glass inspired design system translating light, geometry and layered forms into a distinctive digital visual language.",
-    image: lumaireExperiment,
+      "An open-city arcade driving game: explore Vice Island, switch cars and take on the night shift.",
+    image: viceCityExperiment,
+    previewVideo: viceCityPreview,
+    game: "/games/vice-grid/index.html",
   },
   {
-    title: "Gmail Pulse",
+    title: "OUTDRIVE",
     description:
-      "An AI-assisted Gmail concept that surfaces actionable emails and helps users quickly identify what needs their attention.",
-    image: gmailExperiment,
+      "A neon Three.js driving game: steer the endless road, accelerate and see how far the night takes you.",
+    image: outdriveExperiment,
+    previewVideo: outdrivePreview,
+    game: "/games/outdrive/outdrive.html",
+    gameReturnLabel: "Back to Experiments",
+    gameHint: "Click inside to drive · WASD or arrow keys to steer, accelerate and brake",
   },
 ];
 
@@ -138,6 +152,15 @@ function AssetPlaceholder({ path, kind }: { path: string; kind: "portrait" | "pr
   );
 }
 
+function ResumeTicketLabel() {
+  return <>
+    <svg className="resume-ticket-outline" viewBox="0 0 120 44" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <path d="M3 .75 H117 Q119.25 .75 119.25 3 V17 A5 5 0 0 0 119.25 27 V41 Q119.25 43.25 117 43.25 H3 Q.75 43.25 .75 41 V27 A5 5 0 0 0 .75 17 V3 Q.75 .75 3 .75 Z" vectorEffect="non-scaling-stroke" />
+    </svg>
+    <span>Resume</span>
+  </>;
+}
+
 function Navbar() {
   const [open, setOpen] = useState(false);
   const close = () => setOpen(false);
@@ -150,9 +173,9 @@ function Navbar() {
           <a href="#work" onClick={close}>Work</a>
           <a href="#experiments" onClick={close}>Experiments</a>
           <a href="#about" onClick={close}>About</a>
-          <a href="https://drive.google.com/file/d/1rty1WM8ae-9wCtcvp9i9Any3fwtxRpph/view?usp=sharing" target="_blank" rel="noreferrer" onClick={close}>Resume</a>
+          <ResumeLink onClick={close}><ResumeTicketLabel /></ResumeLink>
         </nav>
-        <a className="resume-link" href="https://drive.google.com/file/d/1rty1WM8ae-9wCtcvp9i9Any3fwtxRpph/view?usp=sharing" target="_blank" rel="noreferrer">Resume</a>
+        <ResumeLink className="resume-link"><ResumeTicketLabel /></ResumeLink>
         <Button variant="ghost" size="icon" className="menu-button" aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} onClick={() => setOpen((value) => !value)}>
           {open ? <X /> : <Menu />}
         </Button>
@@ -241,29 +264,26 @@ function Hero() {
     <section id="top" className="hero site-container" aria-labelledby="hero-title">
       <div className="hero-copy">
         <h1 id="hero-title" className="hero-title">
-          Somewhere between <span>designing it</span> and figuring out <span>how to build it</span>.
+          <span className="hero-headline-line">Somewhere between <em className="hero-title-accent">designing it</em></span>{" "}
+          <span className="hero-headline-line">&amp; figuring out <em className="hero-title-accent">how to build it.</em></span>
         </h1>
         <div className="hero-intro">
           <p className="hero-intro-lead">
-            I’m Anarghya, an engineer<br />
-            turned Product Designer.
+            <span className="hero-intro-line">I'm Anarghya, an engineer turned Product</span>{" "}
+            <span className="hero-intro-line">Designer who enjoys turning ideas into</span>
           </p>
           <p className="hero-intro-follow">
-            I like bringing ideas to life as
             <HeroPhrase />
           </p>
+          <a className="hero-explore" href="#work">
+            <svg className="hero-explore-outline" viewBox="0 0 120 44" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+              <path d="M3 .75 H117 Q119.25 .75 119.25 3 V17 A5 5 0 0 0 119.25 27 V41 Q119.25 43.25 117 43.25 H3 Q.75 43.25 .75 41 V27 A5 5 0 0 0 .75 17 V3 Q.75 .75 3 .75 Z" vectorEffect="non-scaling-stroke" />
+            </svg>
+            <span>Explore Work</span>
+          </a>
         </div>
       </div>
-      <div className="portrait-wrap">
-        <img
-          src={portrait}
-          alt="Portrait of Anarghya"
-          width={394}
-          height={507}
-          fetchPriority="high"
-          decoding="async"
-        />
-      </div>
+      <HeroPortrait src={portrait} />
     </section>
   );
 }
@@ -315,16 +335,7 @@ function ProjectCard({ project, index }: { project: (typeof projects)[number]; i
 }
 
 function WorkSection() {
-  return (
-    <section id="work" className="burgundy-section work-section" aria-labelledby="work-heading">
-      <div className="site-container">
-        <SectionHeading dark className="work-heading">Work</SectionHeading>
-        <div className="work-grid">
-          {projects.map((project, index) => <ProjectCard key={project.title} project={project} index={index} />)}
-        </div>
-      </div>
-    </section>
-  );
+  return <WorkGallery projects={projects} />;
 }
 
 function CapabilitySection() {
@@ -333,7 +344,7 @@ function CapabilitySection() {
       <div className="bring-wrap">
         <h2 id="about-heading" className="bring-heading">What I bring to the table?</h2>
         <div className="bring-stage">
-          <img className="bring-art" src={bringTable} alt="A burgundy ribbon connecting a magnifying glass, puzzle pieces, an open notebook, hanging cones, and wireframe blocks." width={2501} height={1912} />
+          <BringJourney />
         </div>
         <div className="bring-meta">
           <div>
@@ -341,7 +352,7 @@ function CapabilitySection() {
             <div className="tool-row">
               {tools.map((tool) => (
                 <span key={tool.name} className="tool-hit">
-                  <img className="tool-icon" src={tool.src} alt={tool.name} width={72} height={72} />
+                  <img className="tool-icon" src={tool.src} alt={tool.name} width={72} height={72} loading="lazy" decoding="async" />
                   <span className="tool-label" aria-hidden="true">{tool.name}</span>
                 </span>
               ))}
@@ -367,82 +378,19 @@ function CapabilitySection() {
   );
 }
 
-function GalleryLights() {
-  return (
-    <div className="lights" aria-hidden="true">
-      <div className="light-rail" />
-      {[0, 1, 2].map((light) => <div key={light} className={`light-unit light-${light + 1}`}><span><b className="light-bulb" /></span><i /></div>)}
-    </div>
-  );
-}
-
-function ExperimentCard({ experiment, index }: { experiment: (typeof experiments)[number]; index: number }) {
-  const video = "video" in experiment ? experiment.video : undefined;
-  const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [open]);
-
-  return (
-    <Reveal delay={index * 55} className="experiment-reveal">
-      <article className="experiment-card">
-        {video ? (
-          <button type="button" className="experiment-frame" aria-label={`Play ${experiment.title}`} onClick={() => setOpen(true)}>
-            <img className="experiment-image" src={experiment.image} alt="" />
-          </button>
-        ) : (
-          <div className="experiment-frame"><img className="experiment-image" src={experiment.image} alt="" /></div>
-        )}
-        <Plaque className="experiment-plaque"><h3>{experiment.title}</h3><p>{experiment.description}</p></Plaque>
-      </article>
-      {open && video
-        ? createPortal(
-            <div className="video-pop" role="dialog" aria-modal="true" aria-label={experiment.title}>
-              <div className="video-pop-window">
-                <button type="button" className="video-pop-cancel" aria-label="Cancel" onClick={() => setOpen(false)}><X /></button>
-                <video src={video} controls autoPlay playsInline />
-              </div>
-            </div>,
-            document.body,
-          )
-        : null}
-    </Reveal>
-  );
-}
-
 function ExperimentsSection() {
-  return (
-    <section id="experiments" className="burgundy-section experiments-section" aria-labelledby="experiments-heading">
-      <div className="site-container">
-        <SectionHeading dark className="work-heading">Experiments</SectionHeading>
-        <GalleryLights />
-        <div className="experiments-grid">
-          {experiments.map((experiment, index) => <ExperimentCard key={experiment.title} experiment={experiment} index={index} />)}
-        </div>
-        <p className="experiment-scroll">
-          Scroll Left
-          <ArrowLeft aria-hidden="true" />
-        </p>
-      </div>
-    </section>
-  );
+  return <ExperimentsGallery experiments={experiments} />;
 }
 
 function ContactTicket() {
   return (
     <div className="contact-ticket">
-      <img className="ticket-card" src={inviteCard} alt="" />
+      <img className="ticket-card" src={inviteCard} alt="" loading="lazy" decoding="async" />
       <div className="ticket-title"><span>Thanks for Visiting</span><strong>Curated by Anarghya</strong></div>
       <div className="ticket-divider" />
       <div className="ticket-links">
         <p>Say Hello at<br /><a href="mailto:anarghya002@gmail.com">anarghya002@gmail.com</a></p>
-        <p>Take with you<br /><a href="https://drive.google.com/file/d/1rty1WM8ae-9wCtcvp9i9Any3fwtxRpph/view?usp=sharing" target="_blank" rel="noreferrer">Resume</a></p>
+        <p>Take with you<br /><ResumeLink /></p>
       </div>
     </div>
   );
@@ -472,5 +420,5 @@ function ContactSection() {
 }
 
 export function Portfolio() {
-  return <><Navbar /><Hero /><WorkSection /><CapabilitySection /><ExperimentsSection /><ContactSection /></>;
+  return <><Navbar /><Hero /><BuiltGlimpse previews={experiments} /><WorkSection /><CapabilitySection /><ExperimentsSection /><ContactSection /></>;
 }

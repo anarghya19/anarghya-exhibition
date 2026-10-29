@@ -3,11 +3,11 @@ import problemSolution from "../../assets/One Care/One Care Website/Problem - So
 import storyboard from "../../assets/One Care/One Care Website/Storyboard.webp";
 import competitorAnalysis from "../../assets/One Care/One Care Website/Competitor Analysis.webp";
 import careIntegrator from "../../assets/One Care/One Care Website/Care Integrator.webp";
-import oneCareIa from "../../assets/One Care/One Care Website/One care IA.png";
+import oneCareIa from "../../assets/One Care/One Care Website/One care IA.webp";
 import cardSorting from "../../assets/One Care/One Care Website/Card sorting.webp";
 import paperWireframe from "../../assets/One Care/One Care Website/Postcare Paper wireframe.webp";
 import logoExplorations from "../../assets/One Care/One Care Website/Logo explorations.webp";
-import logoBreakdown from "../../assets/One Care/One Care Website/Logo breakdown.png";
+import logoBreakdown from "../../assets/One Care/One Care Website/Logo breakdown.webp";
 import uiDesignSystem from "../../assets/One Care/One Care Website/UI Design system.webp";
 import branding from "../../assets/One Care/One Care Website/Branding.webp";
 import sixStages from "../../assets/One Care/One Care Website/6 stages.webp";
@@ -23,7 +23,7 @@ import onecareThumb from "../../assets/One care Thumbnail.webp";
 import alchemicThumb from "../../assets/Alchemic Thumbnail.webp";
 import gigglesThumb from "../../assets/Giggles Thumbnail.webp";
 import gigglesCover from "../../assets/Giggles/Cover.webp";
-import gigglesBrief from "../../assets/Giggles/Problem Solution.png";
+import gigglesBrief from "../../assets/Giggles/Problem Solution.webp";
 import fnpThumb from "../../assets/FNP Thumbnail.webp";
 
 export type BriefVisual = "bone" | "game" | "gift" | "insight";

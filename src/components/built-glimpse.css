@@ -1,0 +1,30 @@
+.built-glimpse { padding: 40px 0 32px; overflow: hidden; background: #EEE6D9; color: #6F0F18; }
+.built-glimpse-header { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 24px; }
+.built-glimpse-header h2 { margin: 0; font: italic 400 26px/1.15 var(--font-serif); }
+.built-glimpse-link { display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0; min-height: 44px; color: #6F0F18; font: 400 16px/1.4 var(--font-sans); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; transition: color 225ms ease; }
+.built-glimpse-link:hover, .built-glimpse-link:active { color: #4A0910; }
+.built-glimpse-link:focus-visible { outline: 2px solid #6F0F18; outline-offset: 4px; }
+.built-glimpse-strip { position: relative; isolation: isolate; height: 235px; perspective: 850px; overflow: hidden; }
+.built-glimpse-frame { position: absolute; left: 50%; top: 50%; width: min(300px, calc((100% - 132px) / 4)); aspect-ratio: 3 / 2; overflow: hidden; border: 1px solid #B49A70; border-radius: 5px; background: #081825; backface-visibility: hidden; will-change: transform, opacity; visibility: hidden; }
+.built-glimpse-frame[data-project="Gmail Pulse"] { background: #F5FBFC; }
+.built-glimpse-frame img, .built-glimpse-frame video { display: block; width: 100%; height: 100%; object-fit: contain; }
+@media (min-width: 768px) and (max-width: 1199px) {
+  .built-glimpse { padding-top: 36px; padding-bottom: 28px; }
+  .built-glimpse-header h2 { font-size: 23px; }
+  .built-glimpse-link { font-size: 14px; }
+  .built-glimpse-strip { height: 210px; }
+  .built-glimpse-frame { width: min(270px, calc((100% - 84px) / 3)); }
+}
+@media (max-width: 767px) {
+  .built-glimpse { padding: 32px 0 20px; }
+  .built-glimpse-header { align-items: flex-start; flex-direction: column; gap: 4px; margin-bottom: 16px; }
+  .built-glimpse-header h2 { font-size: 20px; }
+  .built-glimpse-link { font-size: 12px; }
+  .built-glimpse-strip { height: 165px; }
+  /* Keep the complete frame visible at the reference's 1.13 centre scale. */
+  .built-glimpse-frame { width: min(76vw, 216px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .built-glimpse-frame { will-change: auto; }
+  .built-glimpse-link { transition: none; }
+}

@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PreviewGlimpseRouteImport } from './routes/preview.glimpse'
 import { Route as WorkAlchemicRouteImport } from './routes/work.alchemic'
 import { Route as WorkFnpCircleRouteImport } from './routes/work.fnp-circle'
 import { Route as WorkGigglesRouteImport } from './routes/work.giggles'
@@ -18,6 +19,11 @@ import { Route as WorkOnecareRouteImport } from './routes/work.onecare'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PreviewGlimpseRoute = PreviewGlimpseRouteImport.update({
+  id: '/preview/glimpse',
+  path: '/preview/glimpse',
   getParentRoute: () => rootRouteImport,
 } as any)
 const WorkAlchemicRoute = WorkAlchemicRouteImport.update({
@@ -43,6 +49,7 @@ const WorkOnecareRoute = WorkOnecareRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/preview/glimpse': typeof PreviewGlimpseRoute
   '/work/alchemic': typeof WorkAlchemicRoute
   '/work/fnp-circle': typeof WorkFnpCircleRoute
   '/work/giggles': typeof WorkGigglesRoute
@@ -50,6 +57,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/preview/glimpse': typeof PreviewGlimpseRoute
   '/work/alchemic': typeof WorkAlchemicRoute
   '/work/fnp-circle': typeof WorkFnpCircleRoute
   '/work/giggles': typeof WorkGigglesRoute
@@ -58,6 +66,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/preview/glimpse': typeof PreviewGlimpseRoute
   '/work/alchemic': typeof WorkAlchemicRoute
   '/work/fnp-circle': typeof WorkFnpCircleRoute
   '/work/giggles': typeof WorkGigglesRoute
@@ -67,6 +76,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/preview/glimpse'
     | '/work/alchemic'
     | '/work/fnp-circle'
     | '/work/giggles'
@@ -74,6 +84,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/preview/glimpse'
     | '/work/alchemic'
     | '/work/fnp-circle'
     | '/work/giggles'
@@ -81,6 +92,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/preview/glimpse'
     | '/work/alchemic'
     | '/work/fnp-circle'
     | '/work/giggles'
@@ -89,6 +101,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PreviewGlimpseRoute: typeof PreviewGlimpseRoute
   WorkAlchemicRoute: typeof WorkAlchemicRoute
   WorkFnpCircleRoute: typeof WorkFnpCircleRoute
   WorkGigglesRoute: typeof WorkGigglesRoute
@@ -102,6 +115,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/preview/glimpse': {
+      id: '/preview/glimpse'
+      path: '/preview/glimpse'
+      fullPath: '/preview/glimpse'
+      preLoaderRoute: typeof PreviewGlimpseRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/work/alchemic': {
@@ -137,6 +157,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PreviewGlimpseRoute: PreviewGlimpseRoute,
   WorkAlchemicRoute: WorkAlchemicRoute,
   WorkFnpCircleRoute: WorkFnpCircleRoute,
   WorkGigglesRoute: WorkGigglesRoute,

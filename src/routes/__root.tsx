@@ -71,7 +71,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Anarghya - Experience Designer" },
+      { title: "Anarghya | Museum of Mind" },
       { name: "description", content: "A curated exhibition of product design, experiments and art by Anarghya." },
       { name: "author", content: "Anarghya Y S" },
       { property: "og:type", content: "website" },
