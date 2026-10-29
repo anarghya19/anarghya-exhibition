@@ -234,3 +234,11 @@
 
 /* Match the Experiments heading's warm cream and italic serif. */
 .wg-v8 .exhibition-head h2,.wg-v8 .mobile-top h2{color:#fff2dc;font-style:italic}
+
+/* FNP's unavailable exhibit: keep the gold frame sharp. */
+.wg-v8 .art-anchor--coming-soon { position:relative; cursor:default; }
+.wg-v8 .art-anchor--coming-soon .art-image { transition:filter 220ms ease; }
+.wg-v8 .art-coming-soon { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:#FFFDF4; font:500 20px/1.4 var(--font-sans); text-shadow:0 1px 4px #21050b; opacity:0; pointer-events:none; transition:opacity 220ms ease; }
+.wg-v8 .art-anchor--coming-soon:is(:hover,:focus) .art-image { filter:blur(3px) brightness(.75); }
+.wg-v8 .art-anchor--coming-soon:is(:hover,:focus) .art-coming-soon { opacity:1; }
+@media(prefers-reduced-motion:reduce) { .wg-v8 .art-anchor--coming-soon .art-image,.wg-v8 .art-coming-soon { transition:none; } }

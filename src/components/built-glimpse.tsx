@@ -81,7 +81,7 @@ export function BuiltGlimpse({ previews, preview = false }: { previews: Preview[
   return (
     <section ref={section} className="built-glimpse built-glimpse--orbit" aria-labelledby="built-glimpse-heading">
       <div className="site-container built-glimpse-header">
-        <h2 id="built-glimpse-heading">Glimpse of what I've built</h2>
+        <h2 id="built-glimpse-heading">Glimpse of experiments built</h2>
         <a className="built-glimpse-link" href={preview ? "/#experiments" : "#experiments"} target={preview ? "_top" : undefined}>View Experiments</a>
       </div>
       <div ref={strip} className="built-glimpse-strip glimpse-orbit-strip" role="region" aria-label="Automatic gallery orbit of experiment previews">

@@ -1,3 +1,4 @@
+import { ResumeLink } from "./resume-viewer";
 import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Menu, X } from "lucide-react";
@@ -5,12 +6,12 @@ import portrait from "../../assets/Anarghya Profile.webp";
 import goldenDot from "../../assets/Golden dot.png";
 import { BringJourney } from "./bring-journey";
 import favicon from "../../assets/Favicon.png";
-import figmaIcon from "../../assets/Figma.png";
-import illustratorIcon from "../../assets/Illustrator.png";
-import stitchIcon from "../../assets/Stitch.png";
-import cursorIcon from "../../assets/Cursor.png";
-import figmaMakeIcon from "../../assets/Figma make.png";
-import lovableIcon from "../../assets/Lovable.png";
+import figmaIcon from "../../assets/Figma.webp";
+import illustratorIcon from "../../assets/Illustrator.webp";
+import stitchIcon from "../../assets/Stitch.webp";
+import cursorIcon from "../../assets/Cursor.webp";
+import figmaMakeIcon from "../../assets/Figma make.webp";
+import lovableIcon from "../../assets/Lovable.webp";
 import onecareThumb from "../../assets/One care Thumbnail.webp";
 import alchemicThumb from "../../assets/Alchemic Thumbnail.webp";
 import gigglesThumb from "../../assets/Giggles Thumbnail.webp";
@@ -25,20 +26,11 @@ import outdrivePreview from "../../assets/outdrive-gallery-preview.mp4";
 import viceCityExperiment from "../../assets/vice-city-cover.webp";
 import { Button } from "@/components/ui/button";
 import { BuiltGlimpse } from "./built-glimpse";
+import { HeroPortrait } from "./hero-portrait";
 import { WorkGallery } from "./work-gallery";
 import { ExperimentsGallery } from "./experiments-gallery";
 
 const projects = [
-  {
-    title: "GIGGLES",
-    subtitle: "Tangible Interaction Game",
-    description:
-      "Designed and built a physical-digital game for autistic children, combining gameplay, tangible interaction, electronics and code.",
-    disciplines: "Interaction Design · Accessibility · Physical Computing",
-    href: "/work/giggles" as const,
-    asset: "/assets/work/giggles.webp",
-    image: gigglesThumb,
-  },
   {
     title: "ALCHEMIC (Summer Internship)",
     subtitle: "AI Customer Insights Platform",
@@ -58,6 +50,16 @@ const projects = [
     href: "/work/onecare" as const,
     asset: "/assets/work/onecare.webp",
     image: onecareThumb,
+  },
+  {
+    title: "GIGGLES",
+    subtitle: "Tangible Interaction Game",
+    description:
+      "Designed and built a physical-digital game for autistic children, combining gameplay, tangible interaction, electronics and code.",
+    disciplines: "Interaction Design · Accessibility · Physical Computing",
+    href: "/work/giggles" as const,
+    asset: "/assets/work/giggles.webp",
+    image: gigglesThumb,
   },
   {
     title: "FNP CIRCLE",
@@ -171,9 +173,9 @@ function Navbar() {
           <a href="#work" onClick={close}>Work</a>
           <a href="#experiments" onClick={close}>Experiments</a>
           <a href="#about" onClick={close}>About</a>
-          <a href="https://drive.google.com/file/d/1rty1WM8ae-9wCtcvp9i9Any3fwtxRpph/view?usp=sharing" target="_blank" rel="noreferrer" onClick={close}><ResumeTicketLabel /></a>
+          <ResumeLink onClick={close}><ResumeTicketLabel /></ResumeLink>
         </nav>
-        <a className="resume-link" href="https://drive.google.com/file/d/1rty1WM8ae-9wCtcvp9i9Any3fwtxRpph/view?usp=sharing" target="_blank" rel="noreferrer"><ResumeTicketLabel /></a>
+        <ResumeLink className="resume-link"><ResumeTicketLabel /></ResumeLink>
         <Button variant="ghost" size="icon" className="menu-button" aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} onClick={() => setOpen((value) => !value)}>
           {open ? <X /> : <Menu />}
         </Button>
@@ -281,16 +283,7 @@ function Hero() {
           </a>
         </div>
       </div>
-      <div className="portrait-wrap">
-        <img
-          src={portrait}
-          alt="Portrait of Anarghya"
-          width={394}
-          height={507}
-          fetchPriority="high"
-          decoding="async"
-        />
-      </div>
+      <HeroPortrait src={portrait} />
     </section>
   );
 }
@@ -397,7 +390,7 @@ function ContactTicket() {
       <div className="ticket-divider" />
       <div className="ticket-links">
         <p>Say Hello at<br /><a href="mailto:anarghya002@gmail.com">anarghya002@gmail.com</a></p>
-        <p>Take with you<br /><a href="https://drive.google.com/file/d/1rty1WM8ae-9wCtcvp9i9Any3fwtxRpph/view?usp=sharing" target="_blank" rel="noreferrer">Resume</a></p>
+        <p>Take with you<br /><ResumeLink /></p>
       </div>
     </div>
   );

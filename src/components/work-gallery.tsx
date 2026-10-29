@@ -198,7 +198,7 @@ export function WorkGallery({ projects }: { projects: readonly Project[] }) {
     <div className="gilded"><img className="art-image" src={project.image} alt={`${project.title} — project cover artwork`} loading="lazy" decoding="async" /></div>
   );
   const artLink = (project: Project) => project.comingSoon
-    ? <div className="art-anchor">{artwork(project)}</div>
+    ? <div className="art-anchor art-anchor--coming-soon" tabIndex={0} aria-label={`${project.title}, coming soon`}>{artwork(project)}<span className="art-coming-soon" aria-hidden="true">Coming soon</span></div>
     : <Link to={project.href} className="art-anchor" aria-label={`View ${project.title} case study`}>{artwork(project)}</Link>;
   const jumpMobile = (index: number) => {
     const root = section.current;
@@ -232,7 +232,7 @@ export function WorkGallery({ projects }: { projects: readonly Project[] }) {
           <div className="wall" aria-hidden="true" />
           <div className="moulding" aria-hidden="true" />
           <div className="floor" aria-hidden="true" />
-          <header className="exhibition-head site-container"><h2>Work</h2></header>
+          <header className="exhibition-head site-container"><h2>Selected Work</h2></header>
           <div className="gallery-content site-container">
           <div className="gallery-art">
             {projects.map((project) => <div className="art-object" key={project.href} inert aria-hidden="true">
@@ -255,7 +255,7 @@ export function WorkGallery({ projects }: { projects: readonly Project[] }) {
       </div>
       <div className="mobile-only">
         <div className="mobile-viewport">
-        <header className="mobile-top site-container"><h2>Work</h2></header>
+        <header className="mobile-top site-container"><h2>Selected Work</h2></header>
         {projects.map((project, index) => <article className={`mobile-article ${project.title.length > 20 ? "is-long" : ""}`} style={{ "--mobile-z": index + 1 } as CSSProperties} inert={index > 0} aria-hidden={index > 0 ? true : undefined} key={project.href}>
           <div className="mobile-stage">
             <div className="mobile-cords" aria-hidden="true" />

@@ -1,8 +1,9 @@
+import { ResumeLink } from "../resume-viewer";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { useEffect, useRef } from "react";
 
-const resumeHref = "https://drive.google.com/file/d/1rty1WM8ae-9wCtcvp9i9Any3fwtxRpph/view?usp=sharing";
+
 
 export function CaseStudyHeader() {
   const header = useRef<HTMLElement>(null);
@@ -23,7 +24,7 @@ export function CaseStudyHeader() {
         </Link>
         <nav aria-label="Case study">
           <Link to="/" hash="work" className="case-study-nav-link">Work</Link>
-          <a className="case-study-nav-link" href={resumeHref} target="_blank" rel="noreferrer">Resume</a>
+          <ResumeLink className="case-study-nav-link" />
         </nav>
       </div>
     </header>

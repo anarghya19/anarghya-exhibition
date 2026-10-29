@@ -956,6 +956,9 @@ button.experiment-frame { display: block; width: 100%; padding: 0; color: inheri
   transition: fill 250ms ease, stroke 250ms ease;
 }
 .hero-explore > span { position: relative; }
+@media (min-width: 768px) {
+  .hero-explore { top: 22px; }
+}
 .hero-explore:hover, .hero-explore:active { color: #F2D18A; }
 .hero-explore:hover .hero-explore-outline,
 .hero-explore:active .hero-explore-outline { fill: #4A0910; stroke: #F2D18A; }

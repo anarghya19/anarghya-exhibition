@@ -94,7 +94,7 @@ export function CaseStudyPage({ study }: { study: CaseStudy }) {
           </>
         ) : (
           <>
-            <ProjectBrief problem={study.problem} solution={study.solution} visual={study.briefVisual} image={study.briefImage} {...(study.briefStatement ? { statement: study.briefStatement } : {})} showHeadings={study.showBriefHeadings !== false} {...(study.slug === "onecare" ? { title: "At a glance" } : {})} />
+            <ProjectBrief problem={study.problem} solution={study.solution} visual={study.briefVisual} image={study.briefImage} {...(study.briefStatement ? { statement: study.briefStatement } : {})} showHeadings={study.showBriefHeadings !== false} {...(study.slug === "onecare" ? { title: "At a glance", demoHref: "https://anarghya19.github.io/onecare/" } : {})} />
             <SectionDivider />
             <CaseStudyContent slug={study.slug} sections={study.sections} />
           </>

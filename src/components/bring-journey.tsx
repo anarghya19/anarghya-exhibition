@@ -1,9 +1,9 @@
 import { useEffect, useId, useRef } from "react";
-import glass from "../../assets/bring-journey/magnifying-glass-source.webp";
-import puzzle from "../../assets/bring-journey/puzzle-pieces-source.webp";
-import notebook from "../../assets/bring-journey/notebook-source.webp";
-import hanging from "../../assets/bring-journey/hanging-shapes-source.webp";
-import blocks from "../../assets/bring-journey/interface-blocks-source.webp";
+import glass from "../../assets/bring-journey/magnifying-glass-source-optimized.webp";
+import puzzle from "../../assets/bring-journey/puzzle-pieces-source-optimized.webp";
+import notebook from "../../assets/bring-journey/notebook-source-optimized.webp";
+import hanging from "../../assets/bring-journey/hanging-shapes-source-optimized.webp";
+import blocks from "../../assets/bring-journey/interface-blocks-source-optimized.webp";
 import ribbon from "../../assets/bring-journey/ribbon-original.svg";
 import mobileRibbon from "../../assets/bring-journey/mobile-ribbon-refined.svg";
 import desktopReveal from "../../assets/bring-journey/desktop-reveal-map.png";
